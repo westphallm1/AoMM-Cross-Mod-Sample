@@ -1,3 +1,9 @@
+using AommCrossModSample.Pets.SampleFlyingPet;
+using AommCrossModSample.Pets.SampleFlyingRangedPet;
+using AommCrossModSample.Pets.SampleGroundedPet;
+using AommCrossModSample.Pets.SampleGroundedRangedPet;
+using AoMMCrossModSample.Pets.SampleFlyingPet;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
