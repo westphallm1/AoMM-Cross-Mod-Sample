@@ -1,0 +1,5 @@
+displayName = AoMM Cross Mod Sample
+author = Billybobmcbo
+version = 0.1
+homepage = https://forums.terraria.org/index.php?threads/the-amulet-of-many-minions.97188/
+modReferences = AmuletOfManyMinions@0.16.0
