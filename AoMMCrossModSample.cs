@@ -1,13 +1,12 @@
 using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
 using AoMMCrossModSample.Pets.SampleGroundedPet;
-using AoMMCrossModSample.Pets.SampleGroundedRangedPet;
-using AoMMCrossModSample.Pets.SampleFlyingPet;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using AoMMCrossModSample.Pets.SampleCustomPet;
 using AoMMCrossModSample.Minions.SampleCustomMinion;
 using AoMMCrossModSample.Minions.SamplePathfindingMinion;
+using AoMMCrossModSample.Minions.SampleGroundedMinion;
 
 namespace AoMMCrossModSample
 {
@@ -21,23 +20,18 @@ namespace AoMMCrossModSample
 
 		private static void RegisterPets()
 		{
-			// Register melee, flying cross mod pet
-			AmuletOfManyMinionsApi.RegisterFlyingPet(
-				GetInstance<SampleFlyingPetProjectile>(), GetInstance<SampleFlyingPetBuff>(), null);
-
-			// To add a projectile attack to the combat pet, pass in a non-null third parameter
-			AmuletOfManyMinionsApi.RegisterFlyingPet(
-				GetInstance<SampleFlyingRangedPetProjectile>(), GetInstance<SampleFlyingRangedPetBuff>(), ProjectileID.FrostDaggerfish);
-
-			// Register melee, grounded cross mod pet
+			// Register a projectile with vanilla pet AI as a grounded cross mod combat pet with melee attack
 			AmuletOfManyMinionsApi.RegisterGroundedPet(
 				GetInstance<SampleGroundedPetProjectile>(), GetInstance<SampleGroundedPetBuff>(), null);
 
-			// Add a ranged attack
-			AmuletOfManyMinionsApi.RegisterGroundedPet(
-				GetInstance<SampleGroundedRangedPetProjectile>(), GetInstance<SampleGroundedRangedPetBuff>(), ProjectileID.PoisonDartBlowgun);
+			// Register a projectile with vanilla pet AI as a flying cross mod combat pet. To switch
+			// a grounded or flying combat pet to ranged attack style, pass in a non-null 3rd parameter
+			// to the mod.Call
+			AmuletOfManyMinionsApi.RegisterFlyingPet(
+				GetInstance<SampleFlyingRangedPetProjectile>(), GetInstance<SampleFlyingRangedPetBuff>(), ProjectileID.FrostDaggerfish);
 
 			// Apply combat pet AI to a projectile that is not a clone of a vanilla pet
+			// This pet's AI also perform some small custom actions based on AoMM state
 			AmuletOfManyMinionsApi.RegisterFlyingPet(
 				GetInstance<SampleCustomPetProjectile>(), GetInstance<SampleCustomPetBuff>(), null);
 
@@ -45,8 +39,13 @@ namespace AoMMCrossModSample
 
 		private static void RegisterMinions()
         {
-			// Register a custom minion that acts on AoMM's state variables, with a search range of 800 pixels
-			AmuletOfManyMinionsApi.RegisterInfoMinion(
+            // Register a projectile with vanilla minion AI as a grounded cross mod minion with ranged attack.
+			// Need to manually specify shot projectile, search range, and travel speed
+            AmuletOfManyMinionsApi.RegisterGroundedMinion(
+                GetInstance<SampleGroundedMinionProjectile>(), GetInstance<SampleGroundedMinionBuff>(), ProjectileID.RubyBolt, 800, 8, 12);
+
+            // Register a custom minion that acts on AoMM's state variables, with a search range of 800 pixels
+            AmuletOfManyMinionsApi.RegisterInfoMinion(
 				GetInstance<SampleCustomMinionProjectile>(), GetInstance<SampleCustomMinionBuff>(), 800);
 
 			// Register a custom minion that acts on AoMM's state variables, but uses the default AoMM pathfinder

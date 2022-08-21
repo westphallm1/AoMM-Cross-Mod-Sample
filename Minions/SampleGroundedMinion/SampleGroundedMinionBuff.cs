@@ -6,34 +6,34 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace AoMMCrossModSample.Pets.SampleFlyingPet
+namespace AoMMCrossModSample.Minions.SampleGroundedMinion
 {
 	// Code largely adapted from tModLoader Sample Mod
-	internal class SampleFlyingPetBuff : ModBuff
+	internal class SampleGroundedMinionBuff : ModBuff
 	{
-		public override string Texture => "Terraria/Images/Buff_" + BuffID.ZephyrFish;
+		public override string Texture => "Terraria/Images/Buff_" + BuffID.VampireFrog;
 
 		public override void SetStaticDefaults()
 		{
 			Main.buffNoTimeDisplay[Type] = true;
-			Main.vanityPet[Type] = true;
-			DisplayName.SetDefault("Sample Flying Pet");
-			Description.SetDefault("Sample Flying Pet");
+			DisplayName.SetDefault("Sample Grounded Minion");
+			Description.SetDefault("Sample Grounded Minion");
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)
 		{
-			drawParams.DrawColor = Color.Red;
+			drawParams.DrawColor = Color.SkyBlue;
 			return true;
 		}
 
 		public override void Update(Player player, ref int buffIndex)
 		{
 			player.buffTime[buffIndex] = 2;
-			int projType = ProjectileType<SampleFlyingPetProjectile>();
+			int projType = ProjectileType<SampleGroundedMinionProjectile>();
 			if(player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] == 0)
 			{
-				Projectile.NewProjectile(player.GetSource_Buff(buffIndex), player.Center, default, projType, 0, 0, player.whoAmI);
+				player.DelBuff(buffIndex);
+				buffIndex--;
 			}
 		}
 	}
