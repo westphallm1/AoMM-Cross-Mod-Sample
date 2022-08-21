@@ -17,7 +17,7 @@ namespace AoMMCrossModSample
 	{
 		/// <summary>
 		/// Get the entire <key, object> mapping of the projectile's cross-mod exposed state, if it has one.
-		/// Cross mod state variables are annotated with [CrossModProperty]
+		/// See AoMMState.cs for the names and types of the exposed state variables.
 		/// </summary>
 		/// <param name="proj">The ModProjectile to access the state for</param>
 		internal static Dictionary<string, object> GetState(ModProjectile proj)
@@ -27,14 +27,16 @@ namespace AoMMCrossModSample
 		}
 
 		/// <summary>
-		/// Get the specified key from the projectile's cross-mod exposed state, if the key exists.
+		/// Fill the projectile's cross-mod exposed state directly into a destination object.
+		/// Cross mod state variables are annotated with [CrossModProperty]. The destination object
+		/// should either explicitly or implicitly implement IAoMMState (see AoMMState.cs).
 		/// </summary>
-		/// <param name="proj">The ModProjectile to access the state for</param>
-		/// <param name="key">The name of the property to read</param>
-		internal static object GetStateValue(ModProjectile proj, string key)
+		/// <param name="proj">The ModProjectile to access the state for.</param>
+		/// <param name="destination">The object to populate the projectile's cross mod state into.</param>
+		internal static void GetStateDirect(ModProjectile proj, object destination)
 		{
-			if(!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return null; }
-			return aomm.Call("GetStateValue", proj, key);
+			if(!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
+			aomm.Call("GetStateDirect", proj, destination);
 		}
 
 		/// <summary>
@@ -183,95 +185,4 @@ namespace AoMMCrossModSample
 		}
 	}
 	
-	/// <summary>
-	/// Utility class for unpacking the Dictionary<string, object> returned by
-	/// mod.Call("GetState", projectile). Also serves as documentation of the fields
-	/// returned in the AoMM state.
-	/// </summary>
-	public class AoMMStateReader
-    {
-		/// <summary>
-		/// Max travel speed for the minion. Updated automatically for pets, set in the 
-		/// mod.Call for minions.
-		/// </summary>
-		public int MaxSpeed { get; set; }
-
-		/// <summary>
-		/// How quickly the minion should change directions while moving. Higher values lead to
-		/// slower turning. Updated automatically for pets, set in the mod.Call for minions.
-		/// </summary>
-		public int Inertia { get; set; }
-
-		/// <summary>
-		/// The range (in pixels) over which the tactic enemy selection should search. Updated
-		/// automatically for pets, set in the mod.Call for minions.
-		/// </summary>
-		public int SearchRange { get; set; }
-
-		/// <summary>
-		/// The position of the next bend in the pathfinding path, based on the minion's current
-		/// position.
-		/// </summary>
-		public Vector2? NextPathfindingTaret { get; set; }
-
-		/// <summary>
-		/// The position of the end of the pathfinding path.
-		/// </summary>
-		public Vector2? PathfindingDestination { get; set; }
-
-		/// <summary>
-		/// The NPC selected as most relevant based on the minion's current tactic and search range.
-		/// </summary>
-		public NPC TargetNPC { get; set; }
-
-		/// <summary>
-		/// All possible NPC targets, ordered by proximity to the most relevant target.
-		/// </summary>
-		public List<NPC> PossibleTargetNPCs { get; set; }
-
-		/// <summary>
-		/// Whether this projectile is being treated as a combat pet.
-		/// </summary>
-		public bool IsPet { get; set; }
-
-		/// <summary>
-		/// The current combat pet level of the player the projectile belongs to.
-		/// </summary>
-		public int PetLevel { get; set; }
-
-		/// <summary>
-		/// The suggested originalDamage value for a combat pet based on the player's current combat pet level.
-		/// </summary>
-		public int PetDamage { get; set; }
-
-		/// <summary>
-		/// Whether AoMM expects the minion to be following the pathfinder on the current frame.
-		/// </summary>
-		public bool IsPathfinding { get; set; }
-
-		/// <summary>
-		/// Whether AoMM expects the minion to be attacking an enemy on the current frame.
-		/// </summary>
-		public bool IsAttacking { get; set; }
-
-		/// <summary>
-		/// Whether AoMM expects the minion to be idling on the current frame.
-		/// </summary>
-		public bool IsIdle { get; set; }
-
-		public AoMMStateReader(Dictionary<string, object> stateDict)
-        {
-			// Use reflection to read the keys from the state dict into this object
-			foreach (var property in GetType().GetProperties())
-            {
-				if(!stateDict.TryGetValue(property.Name, out var state))
-                {
-					continue;
-                }
-				property.SetValue(this, state);
-            }
-        }
-
-	}
-
 }

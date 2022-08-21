@@ -13,7 +13,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace AoMMCrossModSample.Pets.SampleCustomPet
 {
-	// Code largely adapted from tModLoader Sample Mod
+	/// <summary>
+	/// Pet Projectile with partially custom AI that acts according to AoMM default behavior 
+	/// most of the time, but overrides AoMM's behavior when no enemies are present.
+	/// </summary>
 	internal class SampleCustomPetProjectile : ModProjectile
 	{
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Wisp;
@@ -38,15 +41,17 @@ namespace AoMMCrossModSample.Pets.SampleCustomPet
 
 		public override void AI()
 		{
-			// Get the AoMM calculated state for the projectile
-			// In a real mod, you would need to defensively program against these potentially being null
+			// Get the AoMM calculated state for the projectile as a Dictionary<string, object>
+			// In a real mod, you would need to defensively program against these potentially being absent
 			var stateDict = AmuletOfManyMinionsApi.GetState(this);
-			var state = new AoMMStateReader(stateDict);
+			var isIdle = (bool)stateDict["IsIdle"];
 
 			// If the projectile is idling (not attacking or pathfinding), release it from
 			// AoMM's control and make it hover directly over the player's head
-			if(state.IsIdle)
+			if(isIdle)
             {
+                var maxSpeed = (int)stateDict["MaxSpeed"];
+                var inertia = (int)stateDict["Inertia"];
 				// AoMM typically overwrites any changes to position/velocity made in AI(), stop it from doing so
 				// this frame.
 				AmuletOfManyMinionsApi.ReleaseControl(this);
@@ -54,14 +59,14 @@ namespace AoMMCrossModSample.Pets.SampleCustomPet
 				// Update the pet's velocity to move it towards the player
 				Vector2 idlePosition = Main.player[Projectile.owner].Top - new Vector2(0, 16);
 				Vector2 newVelocity = idlePosition - Projectile.Center;
-				if(newVelocity.LengthSquared() > state.MaxSpeed * state.MaxSpeed)
+				if(newVelocity.LengthSquared() > maxSpeed * maxSpeed)
                 {
 					newVelocity.Normalize();
-					newVelocity *= state.MaxSpeed;
+					newVelocity *= maxSpeed;
                 }
 
 				// Standard formula for moving with inertia
-				Projectile.velocity = (Projectile.velocity * (state.Inertia - 1) + newVelocity) / state.Inertia;
+				Projectile.velocity = (Projectile.velocity * (inertia - 1) + newVelocity) / inertia;
             }
 
 			// Basic animation, loop through frames and face the direction of movement,

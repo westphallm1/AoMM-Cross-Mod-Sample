@@ -6,6 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using AoMMCrossModSample.Pets.SampleCustomPet;
+using AoMMCrossModSample.Minions.SampleCustomMinion;
+using AoMMCrossModSample.Minions.SamplePathfindingMinion;
 
 namespace AoMMCrossModSample
 {
@@ -14,6 +16,7 @@ namespace AoMMCrossModSample
 		public override void PostSetupContent()
 		{
 			RegisterPets();
+			RegisterMinions();
 		}
 
 		private static void RegisterPets()
@@ -39,5 +42,16 @@ namespace AoMMCrossModSample
 				GetInstance<SampleCustomPetProjectile>(), GetInstance<SampleCustomPetBuff>(), null);
 
 		}
+
+		private static void RegisterMinions()
+        {
+			// Register a custom minion that acts on AoMM's state variables, with a search range of 800 pixels
+			AmuletOfManyMinionsApi.RegisterInfoMinion(
+				GetInstance<SampleCustomMinionProjectile>(), GetInstance<SampleCustomMinionBuff>(), 800);
+
+			// Register a custom minion that acts on AoMM's state variables, but uses the default AoMM pathfinder
+			AmuletOfManyMinionsApi.RegisterPathfindingMinion(
+				GetInstance<SamplePathfindingMinionProjectile>(), GetInstance<SamplePathfindingMinionBuff>(), 800, 12, 18);
+        }
     }
 }
