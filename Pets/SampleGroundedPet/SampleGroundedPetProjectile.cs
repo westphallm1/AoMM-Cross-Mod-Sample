@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace AommCrossModSample.Pets.SampleGroundedPet
+namespace AoMMCrossModSample.Pets.SampleGroundedPet
 {
 	// Code largely adapted from tModLoader Sample Mod
 	internal class SampleGroundedPetProjectile : ModProjectile

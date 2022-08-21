@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace AommCrossModSample.Pets.SampleGroundedPet
+namespace AoMMCrossModSample.Pets.SampleGroundedPet
 {
 	internal class SampleGroundedPetItem : ModItem
 	{

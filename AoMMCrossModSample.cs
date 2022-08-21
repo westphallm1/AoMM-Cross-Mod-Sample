@@ -1,11 +1,11 @@
-using AommCrossModSample.Pets.SampleFlyingPet;
-using AommCrossModSample.Pets.SampleFlyingRangedPet;
-using AommCrossModSample.Pets.SampleGroundedPet;
-using AommCrossModSample.Pets.SampleGroundedRangedPet;
+using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
+using AoMMCrossModSample.Pets.SampleGroundedPet;
+using AoMMCrossModSample.Pets.SampleGroundedRangedPet;
 using AoMMCrossModSample.Pets.SampleFlyingPet;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using AoMMCrossModSample.Pets.SampleCustomPet;
 
 namespace AoMMCrossModSample
 {
@@ -33,6 +33,10 @@ namespace AoMMCrossModSample
 			// Add a ranged attack
 			AmuletOfManyMinionsApi.RegisterGroundedPet(
 				GetInstance<SampleGroundedRangedPetProjectile>(), GetInstance<SampleGroundedRangedPetBuff>(), ProjectileID.PoisonDartBlowgun);
+
+			// Apply combat pet AI to a projectile that is not a clone of a vanilla pet
+			AmuletOfManyMinionsApi.RegisterFlyingPet(
+				GetInstance<SampleCustomPetProjectile>(), GetInstance<SampleCustomPetBuff>(), null);
 
 		}
     }

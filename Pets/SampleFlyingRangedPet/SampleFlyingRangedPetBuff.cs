@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace AommCrossModSample.Pets.SampleFlyingRangedPet
+namespace AoMMCrossModSample.Pets.SampleFlyingRangedPet
 {
 	// Code largely adapted from tModLoader Example Mod
 	internal class SampleFlyingRangedPetBuff : ModBuff
