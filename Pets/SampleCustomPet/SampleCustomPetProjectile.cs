@@ -23,7 +23,6 @@ namespace AoMMCrossModSample.Pets.SampleCustomPet
         public override void SetDefaults()
         {
             // Don't clone the AI of an existing projectile, set defaults manually
-            Main.projPet[Type] = true;
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.width = 16;
@@ -35,33 +34,34 @@ namespace AoMMCrossModSample.Pets.SampleCustomPet
 
         public override void AI()
         {
+            var maxSpeed = 8;
+            var inertia = 12;
             // Get the AoMM calculated state for the projectile as a Dictionary<string, object>
-            // In a real mod, you would need to defensively program against these potentially being absent
             var stateDict = AmuletOfManyMinionsApi.GetState(this);
-            var isIdle = (bool)stateDict["IsIdle"];
 
-            // If the projectile is idling (not attacking or pathfinding), release it from
-            // AoMM's control and make it hover directly over the player's head
-            if (isIdle)
+            // If AoMM is enabled, and the minion is in the "idle" state, override AoMM's AI
+            // to maintain the non-cross-mod "hover directly over the head" behavior
+            if(stateDict != null && (bool)stateDict["IsIdle"])
             {
-                var maxSpeed = (int)stateDict["MaxSpeed"];
-                var inertia = (int)stateDict["Inertia"];
+                // Update travel speed based on the cross-mod calculated combat pet stats
+                maxSpeed = (int)stateDict["MaxSpeed"];
+                inertia = (int)stateDict["Inertia"];
                 // AoMM typically overwrites any changes to position/velocity made in AI(), stop it from doing so
                 // this frame.
                 AmuletOfManyMinionsApi.ReleaseControl(this);
-
-                // Update the pet's velocity to move it towards the player
-                Vector2 idlePosition = Main.player[Projectile.owner].Top - new Vector2(0, 16);
-                Vector2 newVelocity = idlePosition - Projectile.Center;
-                if (newVelocity.LengthSquared() > maxSpeed * maxSpeed)
-                {
-                    newVelocity.Normalize();
-                    newVelocity *= maxSpeed;
-                }
-
-                // Standard formula for moving with inertia
-                Projectile.velocity = (Projectile.velocity * (inertia - 1) + newVelocity) / inertia;
             }
+
+            // Update the pet's velocity to move it above the player's head
+            Vector2 idlePosition = Main.player[Projectile.owner].Top - new Vector2(0, 16);
+            Vector2 newVelocity = idlePosition - Projectile.Center;
+            if (newVelocity.LengthSquared() > maxSpeed * maxSpeed)
+            {
+                newVelocity.Normalize();
+                newVelocity *= maxSpeed;
+            }
+
+            // Standard formula for moving with inertia
+            Projectile.velocity = (Projectile.velocity * (inertia - 1) + newVelocity) / inertia;
 
             // Basic animation, loop through frames and face the direction of movement,
             // tilting slightly towards direction of movement

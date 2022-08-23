@@ -21,16 +21,23 @@ namespace AoMMCrossModSample
         }
 
         /// <summary>
-        /// Fill the projectile's cross-mod exposed state directly into a destination object.
-        /// Cross mod state variables are annotated with [CrossModProperty]. The destination object
-        /// should either explicitly or implicitly implement IAoMMState (see AoMMState.cs).
+        /// Attempt to fill the projectile's cross-mod exposed state directly into a destination object.
+        /// The returned object will contain all AoMM state variables automatically cast to the correct type 
+        /// (see AoMMState.cs).
         /// </summary>
         /// <param name="proj">The ModProjectile to access the state for.</param>
         /// <param name="destination">The object to populate the projectile's cross mod state into.</param>
-        internal static void GetStateDirect(ModProjectile proj, object destination)
+        /// <returns>True if AoMM is enabled and the projectile has an AoMM state attached, false otherwise.</returns>
+        internal static bool TryGetStateDirect(ModProjectile proj, out IAoMMState destination)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
+            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) 
+            { 
+                destination = null;
+                return false; 
+            }
+            destination = new AoMMStateImpl();
             aomm.Call("GetStateDirect", proj, destination);
+            return destination != null;
         }
 
         /// <summary>
@@ -82,11 +89,16 @@ namespace AoMMCrossModSample
         /// <param name="searchRange">
         /// The range (in pixels) over which the tactic enemy selection should search. AoMM will release the 
         /// minion from the pathfinding AI as soon as an enemy is detected in range.
+        /// Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
         /// </param>
-        /// <param name="travelSpeed">The speed at which the minion should travel while following the pathfinder</param>
+        /// <param name="travelSpeed">
+        /// The speed at which the minion should travel while following the pathfinder
+        /// Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
+        /// </param>
         /// <param name="inertia">
         /// How quickly the minion should change directions while following the pathfinder. Higher values lead to
         /// slower turning.
+        /// Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
         /// </param>
         internal static void RegisterPathfindingMinion(ModProjectile proj, ModBuff buff, int searchRange, int travelSpeed, int inertia)
         {
@@ -132,11 +144,18 @@ namespace AoMMCrossModSample
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
         /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack</param>
-        /// <param name="searchRange">The range (in pixels) over which the tactic enemy selection should search.</param>
-        /// <param name="travelSpeed">The speed at which the minion should travel while following the pathfinder</param>
+        /// <param name="searchRange">
+        /// The range (in pixels) over which the tactic enemy selection should search.
+        /// Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
+        /// </param>
+        /// <param name="travelSpeed">
+        /// The speed at which the minion should travel.
+        /// Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
+        /// </param>
         /// <param name="inertia">
-        /// How quickly the minion should change directions while following the pathfinder. Higher values lead to
+        /// How quickly the minion should change directions while moving. Higher values lead to
         /// slower turning.
+        /// Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
         /// </param>
         internal static void RegisterFlyingMinion(ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia)
         {
@@ -165,12 +184,19 @@ namespace AoMMCrossModSample
         /// </summary>
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
-        /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack</param>
-        /// <param name="searchRange">The range (in pixels) over which the tactic enemy selection should search.</param>
-        /// <param name="travelSpeed">The speed at which the minion should travel while following the pathfinder</param>
+        /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack.</param>
+        /// <param name="searchRange">
+        /// The range (in pixels) over which the tactic enemy selection should search.
+        /// Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
+        /// </param>
+        /// <param name="travelSpeed">
+        /// The speed at which the minion should travel.
+        /// Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
+        /// </param>
         /// <param name="inertia">
-        /// How quickly the minion should change directions while following the pathfinder. Higher values lead to
+        /// How quickly the minion should change directions while moving. Higher values lead to
         /// slower turning.
+        /// Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
         /// </param>
         internal static void RegisterGroundedMinion(ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia)
         {

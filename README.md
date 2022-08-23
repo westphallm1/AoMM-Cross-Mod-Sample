@@ -41,6 +41,9 @@ a different portion of the cross mod API:
   while implementing custom code for following the pathfinder. Also includes an example of using `mod.Call("GetStateDirect", ...)` 
   to access AoMM's state variables directly as an object.
 
+* `Projectiles/`: Contains clones of a few vanilla projectiles, with their `SetDefaults` updated to properly set the flags for a
+	minion-shot projectile. These projectiles are assigned as minion attacks in several `mod.Calls` (see below).
+
 ## Mod.Call Documentation
 
 AoMM provides the following mod.Calls:
@@ -81,12 +84,15 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `searchRange`: 
-		The range (in pixels) over which the tactic enemy selection should search. AoMM will release the 
-		minion from the pathfinding AI as soon as an enemy is detected in range.
-	* `travelSpeed`: The speed at which the minion should travel while following the pathfinder
+		The range (in pixels) over which the tactic enemy selection should search.
+		Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
+	* `travelSpeed`: 
+		The speed at which the minion should travel while following the pathfinder.
+		Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
 	* `inertia`: 
-		How quickly the minion should change directions while following the pathfinder. Higher values lead to
-		slower turning.
+		How quickly the minion should change directions while following the pathfinder. 
+		Higher values lead to slower turning.
+		Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
 
 * `mod.Call("RegisterPathfindingPet", ModProjectile proj, ModBuff buff) -> void`  
 	Register a basic cross mod combat pet. AoMM will run its state calculations for this minion every frame,
@@ -111,11 +117,15 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
-	* `searchRange`: The range (in pixels) over which the tactic enemy selection should search.
-	* `travelSpeed`: The speed at which the minion should travel while following the pathfinder
+	* `searchRange`: 
+		The range (in pixels) over which the tactic enemy selection should search.
+		Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
+	* `travelSpeed`: 
+		The speed at which the minion should travel.
+		Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
 	* `inertia`: 
-		How quickly the minion should change directions while following the pathfinder. Higher values lead to
-		slower turning.
+		How quickly the minion should change directions. Higher values lead to slower turning.
+		Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
 
 * `mod.Call("RegisterGroundedPet", ModProjectile proj, ModBuff buff, int? projType) -> void`
 	Register a fully managed grounded cross mod combat pet. AoMM will take over this projectile's 
@@ -132,11 +142,15 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
-	* `searchRange`: The range (in pixels) over which the tactic enemy selection should search.
-	* `travelSpeed`: The speed at which the minion should travel while following the pathfinder
+	* `searchRange`: 
+		The range (in pixels) over which the tactic enemy selection should search.
+		Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
+	* `travelSpeed`: 
+		The speed at which the minion should travel.
+		Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
 	* `inertia`: 
-		How quickly the minion should change directions while following the pathfinder. Higher values lead to
-		slower turning.
+		How quickly the minion should change directions. Higher values lead to slower turning.
+		Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
 
 ## Amulet of Many Minions cross-mod State Documentation
 

@@ -4,6 +4,7 @@ using AoMMCrossModSample.Minions.SamplePathfindingMinion;
 using AoMMCrossModSample.Pets.SampleCustomPet;
 using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
 using AoMMCrossModSample.Pets.SampleGroundedPet;
+using AoMMCrossModSample.Projectiles;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -28,7 +29,9 @@ namespace AoMMCrossModSample
             // a grounded or flying combat pet to ranged attack style, pass in a non-null 3rd parameter
             // to the mod.Call
             AmuletOfManyMinionsApi.RegisterFlyingPet(
-                GetInstance<SampleFlyingRangedPetProjectile>(), GetInstance<SampleFlyingRangedPetBuff>(), ProjectileID.FrostDaggerfish);
+                GetInstance<SampleFlyingRangedPetProjectile>(), 
+                GetInstance<SampleFlyingRangedPetBuff>(), 
+                ProjectileType<FrostDaggerfishCloneProjectile>());
 
             // Apply combat pet AI to a projectile that is not a clone of a vanilla pet
             // This pet's AI also perform some small custom actions based on AoMM state
@@ -42,7 +45,10 @@ namespace AoMMCrossModSample
             // Register a projectile with vanilla minion AI as a grounded cross mod minion with ranged attack.
             // Need to manually specify shot projectile, search range, and travel speed
             AmuletOfManyMinionsApi.RegisterGroundedMinion(
-                GetInstance<SampleGroundedMinionProjectile>(), GetInstance<SampleGroundedMinionBuff>(), ProjectileID.RubyBolt, 800, 8, 12);
+                GetInstance<SampleGroundedMinionProjectile>(), 
+                GetInstance<SampleGroundedMinionBuff>(), 
+                ProjectileType<RubyBoltCloneProjectile>(),
+                800, 8, 12);
 
             // Register a custom minion that acts on AoMM's state variables, with a search range of 800 pixels
             AmuletOfManyMinionsApi.RegisterInfoMinion(
