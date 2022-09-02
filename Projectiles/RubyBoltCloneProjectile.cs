@@ -15,6 +15,7 @@ namespace AoMMCrossModSample.Projectiles
     /// </summary>
     internal class RubyBoltCloneProjectile : ModProjectile
     {
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RubyBolt;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.MinionShot[Type] = true;

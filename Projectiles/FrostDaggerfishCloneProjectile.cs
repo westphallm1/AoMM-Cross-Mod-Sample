@@ -15,6 +15,7 @@ namespace AoMMCrossModSample.Projectiles
     /// </summary>
     internal class FrostDaggerfishCloneProjectile : ModProjectile
     {
+        public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.FrostDaggerfish;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.MinionShot[Type] = true;

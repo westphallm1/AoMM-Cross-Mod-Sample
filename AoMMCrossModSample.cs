@@ -4,6 +4,7 @@ using AoMMCrossModSample.Minions.SamplePathfindingMinion;
 using AoMMCrossModSample.Pets.SampleCustomPet;
 using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
 using AoMMCrossModSample.Pets.SampleGroundedPet;
+using AoMMCrossModSample.Pets.SampleOptionalCombatPet;
 using AoMMCrossModSample.Projectiles;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,6 +38,11 @@ namespace AoMMCrossModSample
             // This pet's AI also perform some small custom actions based on AoMM state
             AmuletOfManyMinionsApi.RegisterFlyingPet(
                 GetInstance<SampleCustomPetProjectile>(), GetInstance<SampleCustomPetBuff>(), null);
+
+            // Apply combat pet AI to a projectile with multiple summoning buffs, so that it will be a
+            // regular pet when summoned with one buff and a combat pet when summoned with the other
+            AmuletOfManyMinionsApi.RegisterGroundedPet(
+                GetInstance<SampleOptionalCombatPetProjectile>(), GetInstance<SampleOptionalCombatPetBuff_CombatVersion>(), null);
 
         }
 

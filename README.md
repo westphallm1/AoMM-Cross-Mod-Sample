@@ -30,6 +30,12 @@ a different portion of the cross mod API:
   `mod.Call("RegisterFlyingPet", ...)`. Also includes a basic example of using `mod.Call("GetState",...)` to act on
   AoMM state variables retrieved as a dictionary.
 
+* `Pets/SampleOptionalCombatPetProjectile/`: Contains the code for a pet projectile with two pet buffs, one of which is registered with 
+  `mod.Call(...)` and one of which isn't. The pet will behave as a regular pet when summoned via the non-registered buff, and as a combat 
+	pet when summoned via the registered buff. This can be used to achieve an effect similar to the " (AoMM Version)" of pet items in the 
+	base mod.
+
+
 * `Minions/SampleGroundedMinion/`: Contains the boilerplate code for a minion that behaves like the vanilla vampire frog pet. No cross-mod 
   specific code exists in this directory. The cross-mod minion behavior is managed entirely by `mod.Call("RegisterGroundedMinion", ...)`.
 
