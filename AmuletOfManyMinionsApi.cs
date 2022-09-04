@@ -242,6 +242,21 @@ namespace AoMMCrossModSample
         }
 
         /// <summary>
+	    /// Register a fully managed slime-style cross mod combat pet. AoMM will take over this projectile's 
+	    /// AI every frame, and will cause it to behave like a slime pet (eg. the Slime Prince).
+	    /// The pet's damage, movement speed, and search range will automatically scale with the player's combat
+	    /// pet level. Note that slime pets currently only support a melee attack, and cannot fire a projectile.
+        /// </summary>
+        /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
+        /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
+        /// <param name="idleBounce">Whether the minion should remain stationary while idle, or always bounce</param>
+        internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, bool idleBounce)
+        {
+            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
+            aomm.Call("RegisterSlimePet", proj, buff, idleBounce);
+        }
+
+        /// <summary>
         /// Register a fully managed grounded cross mod minion. AoMM will take over this projectile's 
         /// AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
         /// </summary>

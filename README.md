@@ -117,15 +117,11 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `searchRange`: 
-		The range (in pixels) over which the tactic enemy selection should search.
-		Should be ~400 for early pre-HM, ~800 for early HM, ~1200 for late HM.
+		The range (in pixels) over which the tactic enemy selection should search. See behavior parameters below for more details.
 	* `travelSpeed`: 
-		The speed at which the minion should travel while following the pathfinder.
-		Should be ~8 for early pre-HM, ~12 for early HM, ~16 for late HM.
+		The speed at which the minion should travel. See behavior parameters below for more details.
 	* `inertia`: 
-		How quickly the minion should change directions while following the pathfinder. 
-		Higher values lead to slower turning.
-		Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
+		How quickly the minion should change directions. See behavior parameters below for more details.
 
 * `mod.Call("RegisterPathfindingPet", ModProjectile proj, ModBuff buff) -> void`  
 	Register a basic cross mod combat pet. AoMM will run its state calculations for this minion every frame,
@@ -159,7 +155,7 @@ AoMM provides the following mod.Calls:
 	* `attackFrames`: 
 		How frequently the minion should fire a projectile. See behavior parameters below for more details.
 
-* `mod.Call("RegisterGroundedPet", ModProjectile proj, ModBuff buff, int? projType) -> void`
+* `mod.Call("RegisterGroundedPet", ModProjectile proj, ModBuff buff, int? projType) -> void`  
 	Register a fully managed grounded cross mod combat pet. AoMM will take over this projectile's 
 	AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
@@ -182,6 +178,15 @@ AoMM provides the following mod.Calls:
 		How quickly the minion should change directions. See behavior parameters below for more details.
 	* `attackFrames`: 
 		How frequently the minion should fire a projectile. See behavior parameters below for more details.
+
+* `mod.Call("RegisterSlimePet", ModProjectile proj, ModBuff buff, bool idleBounce) -> void`  
+	Register a fully managed slime-style cross mod combat pet. AoMM will take over this projectile's 
+	AI every frame, and will cause it to behave like a slime pet (eg. the Slime Prince).
+	The pet's damage, movement speed, and search range will automatically scale with the player's combat
+	pet level. Note that slime pets currently only support a melee attack, and cannot fire a projectile.
+	* `proj`: The singleton instance of the ModProjectile for this minion type
+	* `buff`: The singleton instance of the ModBuff associated with the minion
+	* `idleBounce`: Whether the minion should remain stationary while not moving, or always bounce back and forth.
 
 ## Amulet of Many Minions cross-mod Behavior Parameters Documentation
 
