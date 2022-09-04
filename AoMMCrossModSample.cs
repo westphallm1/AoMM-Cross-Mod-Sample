@@ -4,6 +4,7 @@ using AoMMCrossModSample.Minions.SamplePathfindingMinion;
 using AoMMCrossModSample.Pets.SampleCustomPet;
 using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
 using AoMMCrossModSample.Pets.SampleGroundedPet;
+using AoMMCrossModSample.Pets.SampleMeleeRangedPet;
 using AoMMCrossModSample.Pets.SampleOptionalCombatPet;
 using AoMMCrossModSample.Projectiles;
 using Terraria.ID;
@@ -43,6 +44,12 @@ namespace AoMMCrossModSample
             // regular pet when summoned with one buff and a combat pet when summoned with the other
             AmuletOfManyMinionsApi.RegisterGroundedPet(
                 GetInstance<SampleOptionalCombatPetProjectile>(), GetInstance<SampleOptionalCombatPetBuff_CombatVersion>(), null);
+
+            // Apply combat pet AI to a projectile that variably acts as a melee or ranged pet,
+            // depending on the player's combat pet level. Uses GetStateDirect to determine pet level,
+            // then GetParamsDirect and UpdateParamsDirect to dynamically update the fired projectile.
+            AmuletOfManyMinionsApi.RegisterGroundedPet(
+                GetInstance<SampleMeleeRangedPetProjectile>(), GetInstance<SampleMeleeRangedPetBuff>(), null);
 
         }
 
