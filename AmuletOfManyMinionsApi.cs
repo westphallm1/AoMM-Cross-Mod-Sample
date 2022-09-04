@@ -214,7 +214,13 @@ namespace AoMMCrossModSample
         /// slower turning.
         /// Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
         /// </param>
-        internal static void RegisterFlyingMinion(ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia)
+        /// <param name="attackFrames">
+        /// How frequently the minion should fire a projectile, if it fires a projectile.
+        /// A good frequency depends on the amount of damage done, with somewhere around 45 frames
+        /// for a high damage projectile and 15 frames for a low damage projectile.
+        /// </param>
+        internal static void RegisterFlyingMinion(
+            ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
         {
             if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
             aomm.Call("RegisterFlyingMinion", proj, buff, projType, searchRange, travelSpeed, inertia);
@@ -255,10 +261,16 @@ namespace AoMMCrossModSample
         /// slower turning.
         /// Should be ~16 for early pre-HM, ~12 for early HM, ~8 for late HM.
         /// </param>
-        internal static void RegisterGroundedMinion(ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia)
+        /// <param name="attackFrames">
+        /// How frequently the minion should fire a projectile, if it fires a projectile.
+        /// A good frequency depends on the amount of damage done, with somewhere around 45 frames
+        /// for a high damage projectile and 15 frames for a low damage projectile.
+        /// </param>
+        internal static void RegisterGroundedMinion(
+            ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
         {
             if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterGroundedMinion", proj, buff, projType, searchRange, travelSpeed, inertia);
+            aomm.Call("RegisterGroundedMinion", proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
         }
     }
 

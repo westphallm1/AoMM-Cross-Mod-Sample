@@ -16,12 +16,12 @@ namespace AoMMCrossModSample.Minions.SampleGroundedMinion
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = Main.projFrames[ProjectileID.VampireFrog];
-            Main.projPet[Type] = true;
         }
 
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.VampireFrog);
+            Projectile.netImportant = true;
             AIType = ProjectileID.VampireFrog;
             // Adjust draw position
             DrawOffsetX = -64;
@@ -33,6 +33,7 @@ namespace AoMMCrossModSample.Minions.SampleGroundedMinion
 
         public override void AI()
         {
+            Main.player[Projectile.owner].vampireFrog = false;
             // Keep alive while the buff is active
             if (Main.player[Projectile.owner].HasBuff(BuffType<SampleGroundedMinionBuff>()))
             {
@@ -45,6 +46,11 @@ namespace AoMMCrossModSample.Minions.SampleGroundedMinion
             // change the light color to distinguish from vanilla
             lightColor = Color.SkyBlue.MultiplyRGB(lightColor * 1.5f);
             return true;
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false; // do not die when colling with a tile
         }
 
     }

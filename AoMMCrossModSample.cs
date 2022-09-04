@@ -1,4 +1,5 @@
 using AoMMCrossModSample.Minions.SampleCustomMinion;
+using AoMMCrossModSample.Minions.SampleEmpoweredMinion;
 using AoMMCrossModSample.Minions.SampleGroundedMinion;
 using AoMMCrossModSample.Minions.SamplePathfindingMinion;
 using AoMMCrossModSample.Pets.SampleCustomPet;
@@ -56,12 +57,13 @@ namespace AoMMCrossModSample
         private static void RegisterMinions()
         {
             // Register a projectile with vanilla minion AI as a grounded cross mod minion with ranged attack.
-            // Need to manually specify shot projectile, search range, and travel speed
+            // Need to manually specify shot projectile, search range, travel speed, movement inertia, and 
+            // attack rate
             AmuletOfManyMinionsApi.RegisterGroundedMinion(
                 GetInstance<SampleGroundedMinionProjectile>(), 
                 GetInstance<SampleGroundedMinionBuff>(), 
                 ProjectileType<RubyBoltCloneProjectile>(),
-                800, 8, 12);
+                800, 8, 12, 25);
 
             // Register a custom minion that acts on AoMM's state variables, with a search range of 800 pixels
             AmuletOfManyMinionsApi.RegisterInfoMinion(
@@ -70,6 +72,14 @@ namespace AoMMCrossModSample
             // Register a custom minion that acts on AoMM's state variables, but uses the default AoMM pathfinder
             AmuletOfManyMinionsApi.RegisterPathfindingMinion(
                 GetInstance<SamplePathfindingMinionProjectile>(), GetInstance<SamplePathfindingMinionBuff>(), 800, 12, 18);
+
+            // Register a managed minion that updates AoMM's behavior params based on the number of copies summoned,
+            // to mimic an "empowered" minion such as Abigail or the Desert Tiger
+            AmuletOfManyMinionsApi.RegisterFlyingMinion(
+                GetInstance<SampleEmpoweredMinionProjectile>(), 
+                GetInstance<SampleEmpoweredMinionBuff>(), 
+                ProjectileType<RubyBoltCloneProjectile>(),
+                800, 12, 18);
         }
     }
 }
