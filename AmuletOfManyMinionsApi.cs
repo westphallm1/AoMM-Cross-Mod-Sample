@@ -41,6 +41,63 @@ namespace AoMMCrossModSample
         }
 
         /// <summary>
+        /// Get the <key, object> mapping of the parameters used to control this projectile's
+        /// cross-mod behavior. See AoMMParams.cs for the names and types of these parameters.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to access the behavior parameters for.</param>
+        internal static Dictionary<string, object> GetParams(ModProjectile proj)
+        {
+            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return null; }
+            return (Dictionary<string, object>)aomm.Call("GetParams", proj);
+        }
+
+        /// <summary>
+        /// Attempt to fill the projectile's cross-mod behavior parameters directly into a destination object.
+        /// The returned object will contain all AoMM parameters automatically cast to the correct type 
+        /// (see AoMMParams.cs).
+        /// </summary>
+        /// <param name="proj">The ModProjectile to access the behavior parameters for.</param>
+        /// <param name="destination">The object to populate the projectile's behavior parameters into.</param>
+        /// <returns>True if AoMM is enabled and the projectile has AoMM params attached, false otherwise.</returns>
+        internal static bool TryGetParamsDirect(ModProjectile proj, out IAoMMParams destination)
+        {
+            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) 
+            { 
+                destination = null;
+                return false; 
+            }
+            destination = new AoMMParamsImpl();
+            aomm.Call("GetParamsDirect", proj, destination);
+            return destination != null;
+        }
+
+        /// <summary>
+        /// Update the parameters used to control this projectile's cross mod behaviior by passing
+        /// in a <key, object> mapping of new parameter values. See AoMMParams.cs for the names and 
+        /// types of these parameters.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to update the behavior parameters for.</param>
+        /// <param name="update">A dictionary containing new behavior paramter values.</param>
+        internal static void UpdateParams(ModProjectile proj, Dictionary<string, object> update)
+        {
+            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
+            aomm.Call("UpdateParams", proj, update);
+        }
+
+        /// <summary>
+        /// Update the parameters used to control this projectile's cross mod behaviior by passing
+        /// in an object that implements the correct paramter names and types. See AoMMParams.cs for 
+        /// the names and types of these parameters.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to update the behavior parameters for.</param>
+        /// <param name="update">An object containing new behavior paramter values.</param>
+        internal static void UpdateParamsDirect(ModProjectile proj, IAoMMParams update)
+        {
+            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
+            aomm.Call("UpdateParamsDirect", proj, update);
+        }
+
+        /// <summary>
         /// For the following frame, do not apply AoMM's pre-calculated position and velocity changes 
         /// to the projectile in PostAI(). Used to temporarily override behavior in fully managed minion AIs
         /// </summary>
