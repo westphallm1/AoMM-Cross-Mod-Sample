@@ -35,6 +35,9 @@ a different portion of the cross mod API:
 	pet when summoned via the registered buff. This can be used to achieve an effect similar to the " (AoMM Version)" of pet items in the 
 	base mod.
 
+* `Pets/SampleMeleeRangedPet/`: Contains the code for a pet projectile that alternates between melee and ranged behavior depending
+  on the player's combat pet level. Uses `mod.Call("GetStateDirect", ...)` to determine the player's combat pet level each frame, then
+	`mod.Call("GetParamsDirect", ...)` and `mod.Call("UpdateParamsDirect", ...)` to toggle between melee and ranged behavior.
 
 * `Minions/SampleGroundedMinion/`: Contains the boilerplate code for a minion that behaves like the vanilla vampire frog pet. No cross-mod 
   specific code exists in this directory. The cross-mod minion behavior is managed entirely by `mod.Call("RegisterGroundedMinion", ...)`.
@@ -46,6 +49,10 @@ a different portion of the cross mod API:
 * `Minions/SampleCustomMinion/`: Contains the code for a minion that implements custom behavior based on AoMM's state variables,
   while implementing custom code for following the pathfinder. Also includes an example of using `mod.Call("GetStateDirect", ...)` 
   to access AoMM's state variables directly as an object.
+
+* `Minions/SampleEmpoweredMinion/`: Contains the code for a minion that behaves like Abigail or the Desert tiger, summoning a single minion
+  that gets more powerful with each minion slot used. Uses `mod.Call("GetParamsDirect", ...)` and `mod.Call("UpdateParamsDirect", ...)` to 
+	dynamically update the minion's travel speed, search range, and attack rate based on the number of copies summoned.
 
 * `Projectiles/`: Contains clones of a few vanilla projectiles, with their `SetDefaults` updated to properly set the flags for a
 	minion-shot projectile. These projectiles are assigned as minion attacks in several `mod.Calls` (see below).
