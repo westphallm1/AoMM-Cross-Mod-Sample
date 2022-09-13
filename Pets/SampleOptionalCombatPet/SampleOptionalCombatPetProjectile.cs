@@ -33,7 +33,14 @@ namespace AoMMCrossModSample.Pets.SampleOptionalCombatPet
 
         public override void AI()
         {
-            if (Main.player[Projectile.owner].HasBuff(BuffType<SampleOptionalCombatPetBuff>()))
+            // The buff type associated with this pet changes based on whether it was 
+            // Spawned with its AoMM version item or its regualar item. For combat pets,
+            // the `IsActive` flag in mod.Call("GetState", ...) will only be true if it
+            // was spawned from the cross mod buff, so use that flag to check
+            bool isCombatPet = AmuletOfManyMinionsApi.TryGetStateDirect(this, out var state) && state.IsActive;
+            int buffType = isCombatPet ?
+                BuffType<SampleOptionalCombatPetBuff_CombatVersion>() : BuffType<SampleOptionalCombatPetBuff>();
+            if (Main.player[Projectile.owner].HasBuff(buffType))
             {
                 Projectile.timeLeft = 2;
             }

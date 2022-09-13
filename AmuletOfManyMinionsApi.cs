@@ -344,6 +344,14 @@ namespace AoMMCrossModSample
         bool IsPet { get; set; }
 
         /// <summary>
+        /// Whether this projectile currently has cross mod AI applied.
+        /// For minions, this is true as long as the projectile type's associated cross-mod buff is present.
+        /// For combat pets, this is only true if the pet was spawned specifically from its associated 
+        /// cross-mod buff.
+        /// </summary>
+        bool IsActive { get; set; }
+
+        /// <summary>
         /// Max travel speed for the minion. Updated automatically for pets, set in the 
         /// mod.Call for minions.
         /// </summary>
@@ -406,6 +414,7 @@ namespace AoMMCrossModSample
         public bool IsPathfinding { get; set; }
         public bool IsAttacking { get; set; }
         public bool IsIdle { get; set; }
+        public bool IsActive { get; set; }
     }
 
 

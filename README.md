@@ -266,6 +266,11 @@ via `mod.Call("GetState", versionString, projectile)`, or copied directly into a
 state properties via `mod.Call("GetStateDirect", versionString, projectile, destination)`. The state values that are calculated,
 and their types, are documented below:
 
+* `bool IsActive`: Whether this projectile currently has cross mod AI applied.
+For minions, this is true as long as the projectile type's associated cross-mod buff is present.
+For combat pets, this is only true if the pet was spawned specifically from its associated 
+cross-mod buff.
+
 * `bool IsAttacking`: Whether AoMM has determined that an enemy is available for the minion to attack. True
 when a nonzero number of enemy NPCs are found within range of the minion for its current tactic, and the minion is
 not in the middle of following the pathfinder.
