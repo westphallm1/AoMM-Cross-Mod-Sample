@@ -12,10 +12,10 @@ namespace AoMMCrossModSample
     /// the registration mod.Call("RegisterXPet",...) or mod.Call("RegisterXMinion", ...).
     /// 
     /// An object that implements this interface can be populated directly with a projectile's
-    /// current AoMM parameters using mod.Call("GetParamsDirect", projectile, paramsImpl).  
+    /// current AoMM parameters using mod.Call("GetParamsDirect", versionString, projectile, paramsImpl).  
     /// 
     /// The AI parameters of an active projectile can be updated to match an object that implements
-    /// this interface using mod.Call("UpdateParamsDirect", projectile, paramsImpl).  
+    /// this interface using mod.Call("UpdateParamsDirect", versionString, projectile, paramsImpl).  
     /// 
     /// An additional interface is provided below for parameters that are only relevant to minions,
     /// as they are updated automatically for combat pets based on the player's pet level.
@@ -35,10 +35,10 @@ namespace AoMMCrossModSample
     /// the registration mod.Call("RegisterXMinion",...).
     /// 
     /// An object that implements this interface can be populated directly with a projectile's
-    /// current AoMM parameters using mod.Call("GetParamsDirect", projectile, paramsImpl).  
+    /// current AoMM parameters using mod.Call("GetParamsDirect", versionString, projectile, paramsImpl).  
     /// 
     /// The AI parameters of an active projectile can be updated to match an object that implements
-    /// this interface using mod.Call("UpdateParamsDirect", projectile, paramsImpl).  
+    /// this interface using mod.Call("UpdateParamsDirect", versionString, projectile, paramsImpl).  
     ///
     /// The values in this interface can only be updated for minions, as they are updated automatically
     /// for pets.

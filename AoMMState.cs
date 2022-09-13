@@ -7,7 +7,7 @@ namespace AoMMCrossModSample
     /// <summary>
     /// Interface containing the names and types of the variables in the AoMM state.
     /// An object that implements this interface can be populated directly with a projectile's
-    /// current AoMM state using mod.Call("GetStateDirect", projectile, stateImpl).  
+    /// current AoMM state using mod.Call("GetStateDirect", versionString, projectile, stateImpl).  
     /// </summary>
     public interface IAoMMState
     {
@@ -84,7 +84,7 @@ namespace AoMMCrossModSample
 
     /// <summary>
     /// Utility class for accessing the AoMM state directly via
-    /// mod.Call("GetStateDirect", projectile, stateImpl).  
+    /// mod.Call("GetStateDirect", versionString, projectile, stateImpl).  
     /// </summary>
     public class AoMMStateImpl : IAoMMState
     {

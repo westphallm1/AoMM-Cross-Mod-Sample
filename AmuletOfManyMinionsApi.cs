@@ -1,14 +1,54 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Terraria.ModLoader;
 
 namespace AoMMCrossModSample
 {
-
+    // Copy this file for your mod, change the namespace above to yours, and read the comments
     /// <summary>
     /// Collection of utility methods that wrap the mod.Calls available from AoMM.
     /// </summary>
-    public static class AmuletOfManyMinionsApi
+    public class AmuletOfManyMinionsApi : ModSystem
     {
+        //GENERAL INFO - PLEASE READ THIS FIRST!
+        //-----------------------
+        //https://github.com/westphallm1/AoMM-Cross-Mod-Sample#readme
+        //
+        //This file is kept up-to-date to the latest AoMM release. You are encouraged to not edit this file, and when an update happens, copy&replace this file again.
+        //Nothing will happen if AoMM updates and your mod doesn't, it's your choice to update it further
+        //-----------------------
+
+        //This is the version of the calls that are used for the mod.
+        //If AoMM updates, it will keep working on the outdated calls, but new features might not be available
+        internal static readonly Version apiVersion = new Version(0, 16, 0, 4);
+
+        internal static string versionString;
+
+        private static Mod aommMod;
+
+        internal static Mod AommMod
+        {
+            get
+            {
+                if (aommMod == null && ModLoader.TryGetMod("AmuletOfManyMinions", out var mod))
+                {
+                    aommMod = mod;
+                }
+                return aommMod;
+            }
+        }
+
+        public override void Load()
+        {
+            versionString = apiVersion.ToString();
+        }
+
+        public override void Unload()
+        {
+            aommMod = null;
+            versionString = null;
+        }
+
         /// <summary>
         /// Get the entire <key, object> mapping of the projectile's cross-mod exposed state, if it has one.
         /// See AoMMState.cs for the names and types of the exposed state variables.
@@ -16,8 +56,7 @@ namespace AoMMCrossModSample
         /// <param name="proj">The ModProjectile to access the state for</param>
         internal static Dictionary<string, object> GetState(ModProjectile proj)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return null; }
-            return (Dictionary<string, object>)aomm.Call("GetState", proj);
+            return AommMod?.Call("GetState", versionString, proj) as Dictionary<string, object>;
         }
 
         /// <summary>
@@ -30,13 +69,8 @@ namespace AoMMCrossModSample
         /// <returns>True if AoMM is enabled and the projectile has an AoMM state attached, false otherwise.</returns>
         internal static bool TryGetStateDirect(ModProjectile proj, out IAoMMState destination)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) 
-            { 
-                destination = null;
-                return false; 
-            }
             destination = new AoMMStateImpl();
-            aomm.Call("GetStateDirect", proj, destination);
+            AommMod?.Call("GetStateDirect", versionString, proj, destination);
             return destination != null;
         }
 
@@ -47,8 +81,7 @@ namespace AoMMCrossModSample
         /// <param name="proj">The ModProjectile to access the behavior parameters for.</param>
         internal static Dictionary<string, object> GetParams(ModProjectile proj)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return null; }
-            return (Dictionary<string, object>)aomm.Call("GetParams", proj);
+            return AommMod?.Call("GetParams", versionString, proj) as Dictionary<string, object>;
         }
 
         /// <summary>
@@ -61,13 +94,8 @@ namespace AoMMCrossModSample
         /// <returns>True if AoMM is enabled and the projectile has AoMM params attached, false otherwise.</returns>
         internal static bool TryGetParamsDirect(ModProjectile proj, out IAoMMParams destination)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) 
-            { 
-                destination = null;
-                return false; 
-            }
             destination = new AoMMParamsImpl();
-            aomm.Call("GetParamsDirect", proj, destination);
+            AommMod?.Call("GetParamsDirect", versionString, proj, destination);
             return destination != null;
         }
 
@@ -80,8 +108,7 @@ namespace AoMMCrossModSample
         /// <param name="update">A dictionary containing new behavior paramter values.</param>
         internal static void UpdateParams(ModProjectile proj, Dictionary<string, object> update)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("UpdateParams", proj, update);
+            AommMod?.Call("UpdateParams", versionString, proj, update);
         }
 
         /// <summary>
@@ -93,8 +120,7 @@ namespace AoMMCrossModSample
         /// <param name="update">An object containing new behavior paramter values.</param>
         internal static void UpdateParamsDirect(ModProjectile proj, IAoMMParams update)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("UpdateParamsDirect", proj, update);
+            AommMod?.Call("UpdateParamsDirect", versionString, proj, update);
         }
 
         /// <summary>
@@ -104,8 +130,7 @@ namespace AoMMCrossModSample
         /// <param name="proj">The ModProjectile to release for this frame</param>
         internal static void ReleaseControl(ModProjectile proj)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("ReleaseControl", proj);
+            AommMod?.Call("ReleaseControl", versionString, proj);
         }
 
         /// <summary>
@@ -119,8 +144,7 @@ namespace AoMMCrossModSample
         /// <returns></returns>
         internal static void RegisterInfoMinion(ModProjectile proj, ModBuff buff, int searchRange)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterInfoMinion", proj, buff, searchRange);
+            AommMod?.Call("RegisterInfoMinion", versionString, proj, buff, searchRange);
         }
 
         /// <summary>
@@ -133,8 +157,7 @@ namespace AoMMCrossModSample
         /// <returns></returns>
         internal static void RegisterInfoPet(ModProjectile proj, ModBuff buff)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterInfoPet", proj, buff);
+            AommMod?.Call("RegisterInfoPet", versionString, proj, buff);
         }
 
         /// <summary>
@@ -159,8 +182,7 @@ namespace AoMMCrossModSample
         /// </param>
         internal static void RegisterPathfindingMinion(ModProjectile proj, ModBuff buff, int searchRange, int travelSpeed, int inertia)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterPathfindingMinion", proj, buff, searchRange, travelSpeed, inertia);
+            AommMod?.Call("RegisterPathfindingMinion", versionString, proj, buff, searchRange, travelSpeed, inertia);
         }
 
 
@@ -175,8 +197,7 @@ namespace AoMMCrossModSample
         /// </param>
         internal static void RegisterPathfindingPet(ModProjectile proj, ModBuff buff)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterPathfindingPet", proj, buff);
+            AommMod?.Call("RegisterPathfindingPet", versionString, proj, buff);
         }
 
         /// <summary>
@@ -190,8 +211,7 @@ namespace AoMMCrossModSample
         /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack</param>
         internal static void RegisterFlyingPet(ModProjectile proj, ModBuff buff, int? projType)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterFlyingPet", proj, buff, projType);
+            AommMod?.Call("RegisterFlyingPet", versionString, proj, buff, projType);
         }
 
         /// <summary>
@@ -222,8 +242,7 @@ namespace AoMMCrossModSample
         internal static void RegisterFlyingMinion(
             ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterFlyingMinion", proj, buff, projType, searchRange, travelSpeed, inertia);
+            AommMod?.Call("RegisterFlyingMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia);
         }
 
         /// <summary>
@@ -237,8 +256,7 @@ namespace AoMMCrossModSample
         /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack</param>
         internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, int? projType)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterGroundedPet", proj, buff, projType);
+            AommMod?.Call("RegisterGroundedPet", versionString, proj, buff, projType);
         }
 
         /// <summary>
@@ -252,8 +270,7 @@ namespace AoMMCrossModSample
         /// <param name="idleBounce">Whether the minion should remain stationary while idle, or always bounce</param>
         internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, bool idleBounce)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterSlimePet", proj, buff, idleBounce);
+            AommMod?.Call("RegisterSlimePet", versionString, proj, buff, idleBounce);
         }
 
         /// <summary>
@@ -284,8 +301,7 @@ namespace AoMMCrossModSample
         internal static void RegisterGroundedMinion(
             ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
         {
-            if (!ModLoader.TryGetMod("AmuletOfManyMinions", out Mod aomm)) { return; }
-            aomm.Call("RegisterGroundedMinion", proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
+            AommMod?.Call("RegisterGroundedMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
         }
     }
 
