@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace AoMMCrossModSample
 {
@@ -49,9 +51,10 @@ namespace AoMMCrossModSample
             versionString = null;
         }
 
+        #region Calls
         /// <summary>
         /// Get the entire <key, object> mapping of the projectile's cross-mod exposed state, if it has one.
-        /// See AoMMState.cs for the names and types of the exposed state variables.
+        /// See IAoMMState interface below for the names and types of the exposed state variables.
         /// </summary>
         /// <param name="proj">The ModProjectile to access the state for</param>
         internal static Dictionary<string, object> GetState(ModProjectile proj)
@@ -62,7 +65,7 @@ namespace AoMMCrossModSample
         /// <summary>
         /// Attempt to fill the projectile's cross-mod exposed state directly into a destination object.
         /// The returned object will contain all AoMM state variables automatically cast to the correct type 
-        /// (see AoMMState.cs).
+        /// (see IAoMMState interface below).
         /// </summary>
         /// <param name="proj">The ModProjectile to access the state for.</param>
         /// <param name="destination">The object to populate the projectile's cross mod state into.</param>
@@ -76,7 +79,7 @@ namespace AoMMCrossModSample
 
         /// <summary>
         /// Get the <key, object> mapping of the parameters used to control this projectile's
-        /// cross-mod behavior. See AoMMParams.cs for the names and types of these parameters.
+        /// cross-mod behavior. See IAoMMParams interface below for the names and types of these parameters.
         /// </summary>
         /// <param name="proj">The ModProjectile to access the behavior parameters for.</param>
         internal static Dictionary<string, object> GetParams(ModProjectile proj)
@@ -87,7 +90,7 @@ namespace AoMMCrossModSample
         /// <summary>
         /// Attempt to fill the projectile's cross-mod behavior parameters directly into a destination object.
         /// The returned object will contain all AoMM parameters automatically cast to the correct type 
-        /// (see AoMMParams.cs).
+        /// (see IAoMMParams interface below).
         /// </summary>
         /// <param name="proj">The ModProjectile to access the behavior parameters for.</param>
         /// <param name="destination">The object to populate the projectile's behavior parameters into.</param>
@@ -101,7 +104,7 @@ namespace AoMMCrossModSample
 
         /// <summary>
         /// Update the parameters used to control this projectile's cross mod behaviior by passing
-        /// in a <key, object> mapping of new parameter values. See AoMMParams.cs for the names and 
+        /// in a <key, object> mapping of new parameter values. See IAoMMParams interface below for the names and 
         /// types of these parameters.
         /// </summary>
         /// <param name="proj">The ModProjectile to update the behavior parameters for.</param>
@@ -113,7 +116,7 @@ namespace AoMMCrossModSample
 
         /// <summary>
         /// Update the parameters used to control this projectile's cross mod behaviior by passing
-        /// in an object that implements the correct paramter names and types. See AoMMParams.cs for 
+        /// in an object that implements the correct paramter names and types. See IAoMMParams interface below for 
         /// the names and types of these parameters.
         /// </summary>
         /// <param name="proj">The ModProjectile to update the behavior parameters for.</param>
@@ -303,6 +306,179 @@ namespace AoMMCrossModSample
         {
             AommMod?.Call("RegisterGroundedMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
         }
+        #endregion
     }
 
+    #region Auxiliary classes and interfaces
+    /// <summary>
+    /// Interface containing the names and types of the variables in the AoMM state.
+    /// An object that implements this interface can be populated directly with a projectile's
+    /// current AoMM state using mod.Call("GetStateDirect", versionString, projectile, stateImpl).  
+    /// </summary>
+    public interface IAoMMState
+    {
+        /// <summary>
+        /// How quickly the minion should change directions while moving. Higher values lead to
+        /// slower turning. Updated automatically for pets, set in the mod.Call for minions.
+        /// </summary>
+        int Inertia { get; set; }
+
+        /// <summary>
+        /// Whether AoMM expects the minion to be attacking an enemy on the current frame.
+        /// </summary>
+        bool IsAttacking { get; set; }
+
+        /// <summary>
+        /// Whether AoMM expects the minion to be idling on the current frame.
+        /// </summary>
+        bool IsIdle { get; set; }
+
+        /// <summary>
+        /// Whether AoMM expects the minion to be following the pathfinder on the current frame.
+        /// </summary>
+        bool IsPathfinding { get; set; }
+
+        /// <summary>
+        /// Whether this projectile is being treated as a combat pet.
+        /// </summary>
+        bool IsPet { get; set; }
+
+        /// <summary>
+        /// Max travel speed for the minion. Updated automatically for pets, set in the 
+        /// mod.Call for minions.
+        /// </summary>
+        int MaxSpeed { get; set; }
+
+        /// <summary>
+        /// The position of the next bend in the pathfinding path, based on the minion's current
+        /// position.
+        /// </summary>
+        Vector2? NextPathfindingTaret { get; set; }
+
+        /// <summary>
+        /// The position of the end of the pathfinding path.
+        /// </summary>
+        Vector2? PathfindingDestination { get; set; }
+
+        /// <summary>
+        /// The suggested originalDamage value for a combat pet based on the player's current combat pet level.
+        /// </summary>
+        int PetDamage { get; set; }
+
+        /// <summary>
+        /// The current combat pet level of the player the projectile belongs to.
+        /// </summary>
+        int PetLevel { get; set; }
+
+        /// <summary>
+        /// All possible NPC targets, ordered by proximity to the most relevant target.
+        /// </summary>
+        List<NPC> PossibleTargetNPCs { get; set; }
+
+        /// <summary>
+        /// The range (in pixels) over which the tactic enemy selection should search. Updated
+        /// automatically for pets, set in the mod.Call for minions.
+        /// </summary>
+        int SearchRange { get; set; }
+
+        /// <summary>
+        /// The NPC selected as most relevant based on the minion's current tactic and search range.
+        /// </summary>
+        NPC TargetNPC { get; set; }
+    }
+
+    /// <summary>
+    /// Utility class for accessing the AoMM state directly via
+    /// mod.Call("GetStateDirect", versionString, projectile, stateImpl).  
+    /// </summary>
+    public class AoMMStateImpl : IAoMMState
+    {
+        public int MaxSpeed { get; set; }
+        public int Inertia { get; set; }
+        public int SearchRange { get; set; }
+        public Vector2? NextPathfindingTaret { get; set; }
+        public Vector2? PathfindingDestination { get; set; }
+        public NPC TargetNPC { get; set; }
+        public List<NPC> PossibleTargetNPCs { get; set; }
+        public bool IsPet { get; set; }
+        public int PetLevel { get; set; }
+        public int PetDamage { get; set; }
+        public bool IsPathfinding { get; set; }
+        public bool IsAttacking { get; set; }
+        public bool IsIdle { get; set; }
+    }
+
+
+    /// <summary>
+    /// Interface containing the names and types of the parameters used to determine the 
+    /// behavior of managed minions and combat pets. These parameters are initially set in
+    /// the registration mod.Call("RegisterXPet",...) or mod.Call("RegisterXMinion", ...).
+    /// 
+    /// An object that implements this interface can be populated directly with a projectile's
+    /// current AoMM parameters using mod.Call("GetParamsDirect", versionString, projectile, paramsImpl).  
+    /// 
+    /// The AI parameters of an active projectile can be updated to match an object that implements
+    /// this interface using mod.Call("UpdateParamsDirect", versionString, projectile, paramsImpl).  
+    /// 
+    /// An additional interface is provided below for parameters that are only relevant to minions,
+    /// as they are updated automatically for combat pets based on the player's pet level.
+    /// </summary>
+    public interface IAoMMCombatPetParams
+    {
+        /// <summary>
+        /// The projectile that the minion or pet fires. If null, the minion will use a
+        /// melee attack.
+        /// </summary>
+        int? FiredProjectileId { get; set; }
+    }
+
+    /// <summary>
+    /// Interface containing the names and types of the parameters used to determine the 
+    /// behavior of managed minions and combat pets. These parameters are initially set in
+    /// the registration mod.Call("RegisterXMinion",...).
+    /// 
+    /// An object that implements this interface can be populated directly with a projectile's
+    /// current AoMM parameters using mod.Call("GetParamsDirect", versionString, projectile, paramsImpl).  
+    /// 
+    /// The AI parameters of an active projectile can be updated to match an object that implements
+    /// this interface using mod.Call("UpdateParamsDirect", versionString, projectile, paramsImpl).  
+    ///
+    /// The values in this interface can only be updated for minions, as they are updated automatically
+    /// for pets.
+    /// </summary>
+    public interface IAoMMParams : IAoMMCombatPetParams
+    {
+        /// <summary>
+        /// How quickly the minion should change directions while moving. Higher values lead to
+        /// slower turning. 
+        /// </summary>
+        int Inertia { get; set; }
+
+        /// <summary>
+        /// Max travel speed for the minion.
+        /// </summary>
+        int MaxSpeed { get; set; }
+
+        /// <summary>
+        /// The range (in pixels) over which the tactic enemy selection should search.
+        /// </summary>
+        int SearchRange { get; set; }
+
+        /// <summary>
+        /// The projectile firing rate for the minion, if that minion fires a projectile. Only
+        /// applies to projectile-firing minions. The attack speed of melee minions is derived
+        /// from their movement speed.
+        /// </summary>
+        int AttackFrames { get; set; }
+    }
+
+    public class AoMMParamsImpl : IAoMMParams
+    {
+        public int Inertia { get; set; }
+        public int MaxSpeed { get; set; }
+        public int SearchRange { get; set; }
+        public int AttackFrames { get; set; }
+        public int? FiredProjectileId { get; set; }
+    }
+    #endregion
 }

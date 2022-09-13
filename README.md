@@ -16,12 +16,11 @@ scale in damage and travel speed based on the player's combat pet level.
 The sample mod's files are located in the following sub-directories. Each file demonstrates
 a different portion of the cross mod API:
 
-* `AmuletOfManyMinionsApi.cs`: Contains convenience wrappers for every `mod.Call` option in AoMM, as well
-  as documentation for those calls. Documentation is also provided below in the README.
-
-* `AoMMState.cs`: Contains an Interface that matches the value names and types returned by AoMM's state-getter call 
-  (`mod.Call("GetStateDirect", versionString, projectile, output)`), as well as documentation of those fields, and a basic implementation of that interface. 
-  Documentation for the fields in the interface is also provided below in the README.
+* `AmuletOfManyMinionsApi.cs`: Contains all the things you need in your mod - convenience wrappers for every `mod.Call` option in AoMM, helper classes and interfaces, as well as documentation for those. Documentation is also provided below in the README.
+    * IAoMMState: An Interface that matches the value names and types returned by AoMM's state-getter call 
+  (`mod.Call("GetStateDirect", versionString, projectile, output)`), as well as documentation of those fields, and a basic implementation of that interface (AoMMStateImpl). Documentation for the fields in the interface is also provided below in the README.
+    * IAoMMParams: An Interface that matches the value names and types returned by AoMM's params-getter call 
+  (`mod.Call("GetParamsDirect", versionString, projectile, destination)`), as well as documentation of those fields, and a basic implementation of that interface (AoMMParamsImpl). Documentation for the fields in the interface is also provided below in the README.
 
 * `AoMMCrossModSample.cs`: Contains all of the `mod.Call`s used to register the sample minions and pets for cross-mod AI.
 
@@ -73,7 +72,7 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("GetStateDirect", string versionString, ModProjectile proj, object destination) -> void`  
 	Fill the projectile's cross-mod exposed state directly into a destination object.
-	The destination object should either explicitly or implicitly implement IAoMMState (see AoMMState.cs).
+	The destination object should either explicitly or implicitly implement IAoMMState (see AmuletOfManyMinionsApi.cs).
   * `proj`: The active instance of the projectile whose state should be retrieved
   * `destination`: An object that implements IAoMMState. Its fields will be overridden with the projectile's AoMM managed state via reflection.
 
@@ -85,7 +84,7 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("GetParamsDirect", string versionString, ModProjectile proj, object destination) -> void`  
 	Fill the projectile's cross-mod behavior parameters directly into a destination object.
-	The destination object should either explicitly or implicitly implement IAoMMParams (see AoMMParams.cs).
+	The destination object should either explicitly or implicitly implement IAoMMParams (see AmuletOfManyMinionsApi.cs).
   * `proj`: The active instance of the projectile whose state should be retrieved
   * `destination`: An object that implements IAoMMParams. Its fields will be overridden with the projectile's AoMM behavior parameters via reflection.
 
@@ -97,7 +96,7 @@ AoMM provides the following mod.Calls:
 * `mod.Call("UpdateParamsDirect", string versionString, ModProjectile proj, object source) -> void`  
   Update the projectile's cross-mod behavior parameters directly based off the properties of a source object.
 	Fill the projectile's cross-mod behavior parameters directly into a destination object.
-	The destination object should either explicitly or implicitly implement IAoMMParams (see AoMMParams.cs).
+	The destination object should either explicitly or implicitly implement IAoMMParams (see AmuletOfManyMinionsApi.cs).
   * `proj`: The active instance of the projectile whose state should be retrieved
   * `source`: An object that implements IAoMMParams. The projectile's AoMM behavior parameters will be overwritten with this object's fields via reflection.
 
