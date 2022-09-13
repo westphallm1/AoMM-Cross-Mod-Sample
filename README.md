@@ -68,42 +68,49 @@ AoMM provides the following mod.Calls:
 ### Accessing AoMM-Computed State:
 * `mod.Call("GetState", string versionString, ModProjectile proj) -> Dictionary<string, object>`  
   Get the entire <key, object> mapping of the projectile's cross-mod exposed state.
-  * `proj`: The active instance of the projectile whose state should be retrieved
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
 
 * `mod.Call("GetStateDirect", string versionString, ModProjectile proj, object destination) -> void`  
 	Fill the projectile's cross-mod exposed state directly into a destination object.
 	The destination object should either explicitly or implicitly implement IAoMMState (see AmuletOfManyMinionsApi.cs).
-  * `proj`: The active instance of the projectile whose state should be retrieved
-  * `destination`: An object that implements IAoMMState. Its fields will be overridden with the projectile's AoMM managed state via reflection.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+	* `destination`: An object that implements IAoMMState. Its fields will be overridden with the projectile's AoMM managed state via reflection.
 
 ### Modifying AoMM-Controlled Behavior Dynamically:
 
 * `mod.Call("GetParams", string versionString, ModProjectile proj) -> Dictionary<string, object>`  
   Get the entire <key, object> mapping of the parameters used to control the minion's cross-mod behavior.
-  * `proj`: The active instance of the projectile whose behavior parameters should be retrieved
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose behavior parameters should be retrieved
 
 * `mod.Call("GetParamsDirect", string versionString, ModProjectile proj, object destination) -> void`  
 	Fill the projectile's cross-mod behavior parameters directly into a destination object.
 	The destination object should either explicitly or implicitly implement IAoMMParams (see AmuletOfManyMinionsApi.cs).
-  * `proj`: The active instance of the projectile whose state should be retrieved
-  * `destination`: An object that implements IAoMMParams. Its fields will be overridden with the projectile's AoMM behavior parameters via reflection.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+	* `destination`: An object that implements IAoMMParams. Its fields will be overridden with the projectile's AoMM behavior parameters via reflection.
 
 * `mod.Call("UpdateParams", string versionString, ModProjectile proj, Dictionary<string, object> source) -> void`  
   Update the projectile's cross-mod behavior parameters using a <key, object> mapping of new parameters values.
-  * `proj`: The active instance of the projectile whose behavior parameters should be retrieved
-  * `source`: a <string, object> dictionary containing new values for the minion's cross mod behavior parameters.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose behavior parameters should be retrieved
+	* `source`: a <string, object> dictionary containing new values for the minion's cross mod behavior parameters.
 
 * `mod.Call("UpdateParamsDirect", string versionString, ModProjectile proj, object source) -> void`  
   Update the projectile's cross-mod behavior parameters directly based off the properties of a source object.
 	Fill the projectile's cross-mod behavior parameters directly into a destination object.
 	The destination object should either explicitly or implicitly implement IAoMMParams (see AmuletOfManyMinionsApi.cs).
-  * `proj`: The active instance of the projectile whose state should be retrieved
-  * `source`: An object that implements IAoMMParams. The projectile's AoMM behavior parameters will be overwritten with this object's fields via reflection.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+	* `source`: An object that implements IAoMMParams. The projectile's AoMM behavior parameters will be overwritten with this object's fields via reflection.
 
 * `mod.Call("ReleaseControl", string versionString, ModProjectile proj) -> void`  
 	For the following frame, do not apply AoMM's pre-calculated position and velocity changes 
 	to the projectile in PostAI(). Used to temporarily override behavior in fully managed minion AIs.
-  * `proj`: The active instance of the projectile whose state should be retrieved
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
 
 ### Registering Minions for cross-mod AI:
 
@@ -111,20 +118,23 @@ AoMM provides the following mod.Calls:
 	Register a read-only cross mod minion. AoMM will run its state calculations for this minion every frame,
 	but will not perform any actions based on those state calculations. The ModProjectile may read AoMM's 
 	calculated state using `mod.Call("GetState", versionString, this)`, and act on that state in any way.
-  * `proj`: The singleton content instance of the ModProjectile (as retrieved via `ModContent.GetInstance`)
-  * `buff`: The singleton content instance of the ModBuff (as retrieved via `ModContent.GetInstance`) that's applied when the minion is summoned. 
-  * `searchRange`: The range (in pixels) over which the tactic enemy selection should search.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The singleton content instance of the ModProjectile (as retrieved via `ModContent.GetInstance`)
+	* `buff`: The singleton content instance of the ModBuff (as retrieved via `ModContent.GetInstance`) that's applied when the minion is summoned. 
+	* `searchRange`: The range (in pixels) over which the tactic enemy selection should search.
 
 * `mod.Call("RegisterInfoPet", string versionString, ModProjectile proj, ModBuff buff) -> void`  
 	Register a read-only cross mod combat pet. AoMM will run its state calculations for this combat pet every frame,
 	but will not perform any actions based on those state calculations. The ModProjectile may read AoMM's 
 	calculated state using `mod.Call("GetState", versionString, this)`, and act on that state in any way.
-  * `proj`: The singleton content instance of the ModProjectile (as retrieved via `ModContent.GetInstance`)
-  * `buff`: The singleton content instance of the ModBuff (as retrieved via `ModContent.GetInstance`) that's applied when the minion is summoned. 
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The singleton content instance of the ModProjectile (as retrieved via `ModContent.GetInstance`)
+	* `buff`: The singleton content instance of the ModBuff (as retrieved via `ModContent.GetInstance`) that's applied when the minion is summoned. 
 
 * `mod.Call("RegisterPathfindingMinion", string versionString, ModProjectile proj, ModBuff buff, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a basic cross mod minion. AoMM will run its state calculations for this minion every frame,
 	and take over its position and velocity while the pathfinder is present.
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `searchRange`: 
@@ -139,6 +149,7 @@ AoMM provides the following mod.Calls:
 	and take over its position and velocity while the pathfinding node is present.
 	The pet's movement speed and search range will automatically scale with the player's combat
 	pet level.
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 
@@ -147,6 +158,7 @@ AoMM provides the following mod.Calls:
 	AI every frame, and will cause it to behave like a basic flying minion (eg. the Raven staff).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
 	pet level.
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
@@ -154,6 +166,7 @@ AoMM provides the following mod.Calls:
 * `mod.Call("RegisterFlyingMinion", string versionString, ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a fully managed flying cross mod minion. AoMM will take over this projectile's 
 	AI every frame, and will cause it to behave like a basic flying minion (eg. the Raven staff).
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
@@ -171,6 +184,7 @@ AoMM provides the following mod.Calls:
 	AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
 	pet level.
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
@@ -178,6 +192,7 @@ AoMM provides the following mod.Calls:
 * `mod.Call("RegisterGroundedMinion", string versionString, ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a fully managed grounded cross mod minion. AoMM will take over this projectile's 
 	AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
@@ -195,6 +210,7 @@ AoMM provides the following mod.Calls:
 	AI every frame, and will cause it to behave like a slime pet (eg. the Slime Prince).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
 	pet level. Note that slime pets currently only support a melee attack, and cannot fire a projectile.
+	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `idleBounce`: Whether the minion should remain stationary while not moving, or always bounce back and forth.
