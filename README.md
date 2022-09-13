@@ -1,7 +1,7 @@
 # Amulet of Many Minions Cross Mod Sample
 
 ## Overview
-This repository contains a small example mod that utilizes Amulet of Many Minions' (AoMM) cross-mod
+This repository contains a small example mod that utilizes [Amulet of Many Minions' (AoMM)](https://github.com/westphallm1/tModLoader_Minions) cross-mod
 API. This API allows minions and pets added by other mods to utilize AoMM's pathfinding tools,
 select enemies to attack based on AoMM's target selection tactics, and, in the case of pets, automatically
 scale in damage and travel speed based on the player's combat pet level.
