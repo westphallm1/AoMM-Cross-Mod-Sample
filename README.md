@@ -181,7 +181,7 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("RegisterGroundedPet", string versionString, ModProjectile proj, ModBuff buff, int? projType) -> void`  
 	Register a fully managed grounded cross mod combat pet. AoMM will take over this projectile's 
-	AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
+	AI every frame, and will cause it to behave like a basic grounded minion (eg. the Flinx staff).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
 	pet level.
 	* `versionString`: The version string for the AoMM version this call is targeting
@@ -191,7 +191,7 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("RegisterGroundedMinion", string versionString, ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a fully managed grounded cross mod minion. AoMM will take over this projectile's 
-	AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
+	AI every frame, and will cause it to behave like a basic grounded minion (eg. the Flinx staff).
 	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion

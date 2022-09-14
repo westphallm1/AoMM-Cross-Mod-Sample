@@ -245,12 +245,12 @@ namespace AoMMCrossModSample
         internal static void RegisterFlyingMinion(
             ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
         {
-            AommMod?.Call("RegisterFlyingMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia);
+            AommMod?.Call("RegisterFlyingMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
         }
 
         /// <summary>
         /// Register a fully managed grounded cross mod combat pet. AoMM will take over this projectile's 
-        /// AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
+        /// AI every frame, and will cause it to behave like a basic grounded minion (eg. the Flinx staff).
         /// The pet's damage, movement speed, and search range will automatically scale with the player's combat
         /// pet level.
         /// </summary>
@@ -271,14 +271,14 @@ namespace AoMMCrossModSample
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
         /// <param name="idleBounce">Whether the minion should remain stationary while idle, or always bounce</param>
-        internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, bool idleBounce)
+        internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, bool idleBounce)
         {
             AommMod?.Call("RegisterSlimePet", versionString, proj, buff, idleBounce);
         }
 
         /// <summary>
         /// Register a fully managed grounded cross mod minion. AoMM will take over this projectile's 
-        /// AI every frame, and will cause it to behave like a basic flying minion (eg. the Flinx staff).
+        /// AI every frame, and will cause it to behave like a basic grounded minion (eg. the Flinx staff).
         /// </summary>
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
