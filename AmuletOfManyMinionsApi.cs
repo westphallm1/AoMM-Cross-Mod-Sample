@@ -344,14 +344,6 @@ namespace AoMMCrossModSample
         bool IsPet { get; set; }
 
         /// <summary>
-        /// Whether this projectile currently has cross mod AI applied.
-        /// For minions, this is true as long as the projectile type's associated cross-mod buff is present.
-        /// For combat pets, this is only true if the pet was spawned specifically from its associated 
-        /// cross-mod buff.
-        /// </summary>
-        bool IsActive { get; set; }
-
-        /// <summary>
         /// Max travel speed for the minion. Updated automatically for pets, set in the 
         /// mod.Call for minions.
         /// </summary>
@@ -439,6 +431,15 @@ namespace AoMMCrossModSample
         /// melee attack.
         /// </summary>
         int? FiredProjectileId { get; set; }
+
+        /// <summary>
+        /// Whether this projectile currently has cross-mod AI applied.
+        /// By default, this is true for a projectile if it was spawned from its associated 
+        /// cross-mod buff, or an item that adds that buff. For more complicated use cases, such as
+        /// a minion that is spawned as a sub-projectile of another minion, this flag must be set
+        /// manually
+        /// </summary>
+        bool IsActive { get; set; }
     }
 
     /// <summary>
@@ -483,6 +484,7 @@ namespace AoMMCrossModSample
 
     public class AoMMParamsImpl : IAoMMParams
     {
+        public bool IsActive { get; set; }
         public int Inertia { get; set; }
         public int MaxSpeed { get; set; }
         public int SearchRange { get; set; }

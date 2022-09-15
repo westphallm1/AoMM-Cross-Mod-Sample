@@ -56,7 +56,10 @@ a different portion of the cross mod API:
 
 * `Minions/SampleEmpoweredMinion/`: Contains the code for a minion that behaves like Abigail or the Desert tiger, summoning a single minion
   that gets more powerful with each minion slot used. Uses `mod.Call("GetParamsDirect", ...)` and `mod.Call("UpdateParamsDirect", ...)` to 
-	dynamically update the minion's travel speed, search range, and attack rate based on the number of copies summoned.
+  dynamically update the minion's travel speed, search range, and attack rate based on the number of copies summoned. Also contains an
+  example of manually enabling cross-mod AI with the `IsActive` flag in `UpdateParamsDirect`, since the specific spawn conditions for 
+  the empowered minion prevent AoMM from enabling it by default.
+  
 
 * `Projectiles/`: Contains clones of a few vanilla projectiles, with their `SetDefaults` updated to properly set the flags for a
 	minion-shot projectile. These projectiles are assigned as minion attacks in several `mod.Calls` (see below).
@@ -229,6 +232,13 @@ The parameter values, their types, and their effects on the minion's behavior ar
 most of these parameters can only be updated for minions, since the values are updated automatically for
 combat pets based on the player's pet level.
 
+* `bool IsActive`: Whether this minion or pet currently has cross-mod AI applied. By default, this is true for a
+  projectile if it was spawned from its associated cross-mod buff, or an item that adds that buff to the player.
+  For more complicated minion spawn conditions, such as a minion that is spawned as a sub-projectile of another 
+  minion, this flag must be set to true manually.
+
+* `int? FiredProjectileId`: Which projectile the minion should fire. set manually for both minions and pets. If null,
+  the minion/pet will perform a melee attack instead.
 
 * `int SearchRange`: The range (in pixels) over which the tactic enemy selection should search. 
   Updated automatically for pets, set manually for minions. For minions, a
@@ -250,8 +260,6 @@ combat pets based on the player's pet level.
   * 12 for early hardmode
   * 8 for late hardmode  
 
-* `int? FiredProjectileId`: Which projectile the minion should fire. set manually for both minions and pets. If null,
-  the minion/pet will perform a melee attack instead.
 
 * `int AttackFrames`: The rate at which the minion should fire its projectile, if it fires a projectile. Updated 
   automatically for pets, set manually for minions. Reasonable values for this parameter vary depending on the
@@ -265,11 +273,6 @@ calculations each frame in that ModProjectile's `PreAI` hook. These values can b
 via `mod.Call("GetState", versionString, projectile)`, or copied directly into an object that contains any subset of the
 state properties via `mod.Call("GetStateDirect", versionString, projectile, destination)`. The state values that are calculated,
 and their types, are documented below:
-
-* `bool IsActive`: Whether this projectile currently has cross mod AI applied.
-For minions, this is true as long as the projectile type's associated cross-mod buff is present.
-For combat pets, this is only true if the pet was spawned specifically from its associated 
-cross-mod buff.
 
 * `bool IsAttacking`: Whether AoMM has determined that an enemy is available for the minion to attack. True
 when a nonzero number of enemy NPCs are found within range of the minion for its current tactic, and the minion is
