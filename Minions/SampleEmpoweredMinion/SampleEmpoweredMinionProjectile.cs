@@ -87,6 +87,21 @@ namespace AoMMCrossModSample.Minions.SampleEmpoweredMinion
         // necessary for melee minions
         public override bool MinionContactDamage() => true;
 
+        public override bool PreAI()
+        {
+            if(AmuletOfManyMinionsApi.TryGetParamsDirect(this, out var modParams))
+            {
+                // By default, cross-mod AI is only applied to projectiles that are spawned by an 
+                // item with a cross-mod registered `buffType`. Since this projectile is instead
+                // spawned by another projectile (the counter minion), we must tell AoMM to apply
+                // cross-mod AI explicitly by setting `IsActive = true`
+                modParams.IsActive = true;
+                // Need to manually apply params updates after updating
+                AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
+            }
+            return base.PreAI();
+        }
+
         public override void AI()
         {
             // For visual alignment purposes, these seem to need regular updates
@@ -114,13 +129,6 @@ namespace AoMMCrossModSample.Minions.SampleEmpoweredMinion
                 modParams.MaxSpeed = Math.Min(16, 12 + empowerCount);
                 modParams.Inertia = Math.Min(16, 12 + empowerCount);
                 modParams.SearchRange = Math.Min(1200, 1000 + 50 * empowerCount);
-
-                // By default, cross-mod AI is only applied to projectiles that are spawned by an 
-                // item with a cross-mod registered `buffType`. Since this projectile is instead
-                // spawned by another projectile (the counter minion), we must tell AoMM to apply
-                // cross-mod AI explicitly by setting `IsActive = true`
-                modParams.IsActive = true;
-
                 // Need to manually apply params updates after updating
                 AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
             }
