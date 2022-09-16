@@ -1,3 +1,4 @@
+using AoMMCrossModSample.Minions.SampleActiveToggleMinion;
 using AoMMCrossModSample.Minions.SampleCustomMinion;
 using AoMMCrossModSample.Minions.SampleEmpoweredMinion;
 using AoMMCrossModSample.Minions.SampleGroundedMinion;
@@ -60,8 +61,8 @@ namespace AoMMCrossModSample
             // Need to manually specify shot projectile, search range, travel speed, movement inertia, and 
             // attack rate
             AmuletOfManyMinionsApi.RegisterGroundedMinion(
-                GetInstance<SampleGroundedMinionProjectile>(), 
-                GetInstance<SampleGroundedMinionBuff>(), 
+                GetInstance<SampleGroundedMinionProjectile>(),
+                GetInstance<SampleGroundedMinionBuff>(),
                 ProjectileType<RubyBoltCloneProjectile>(),
                 800, 8, 12, 25);
 
@@ -80,6 +81,14 @@ namespace AoMMCrossModSample
                 GetInstance<SampleEmpoweredMinionBuff>(), 
                 ProjectileType<RubyBoltCloneProjectile>(),
                 800, 12, 18);
+
+            // Register a projectile with vanilla minion AI as a grounded cross mod minion that manually
+            // determines whether it should use cross mod AI based on the game state
+            AmuletOfManyMinionsApi.RegisterGroundedMinion(
+                GetInstance<SampleActiveToggleMinionProjectile>(), 
+                GetInstance<SampleActiveToggleMinionBuff>(), 
+                ProjectileType<RubyBoltCloneProjectile>(),
+                800, 8, 12, 25);
         }
     }
 }

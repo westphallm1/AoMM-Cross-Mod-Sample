@@ -59,7 +59,10 @@ a different portion of the cross mod API:
   dynamically update the minion's travel speed, search range, and attack rate based on the number of copies summoned. Also contains an
   example of manually enabling cross-mod AI with the `IsActive` flag in `UpdateParamsDirect`, since the specific spawn conditions for 
   the empowered minion prevent AoMM from enabling it by default.
-  
+
+* `Minions/SampleActiveToggleMinion/`: Contains the code for a minion that behaves like the vanilla vampire pet frog, and switches
+  between its default AI and the managed grounded cross mod AI based on the count of minions summoned. This is not a particularly
+  practical scenario for cross mod AI behavior, but demonstrates an advanced feature of the cross mod AI.
 
 * `Projectiles/`: Contains clones of a few vanilla projectiles, with their `SetDefaults` updated to properly set the flags for a
 	minion-shot projectile. These projectiles are assigned as minion attacks in several `mod.Calls` (see below).
