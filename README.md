@@ -187,7 +187,7 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("RegisterGroundedPet", string versionString, ModProjectile proj, ModBuff buff, int? projType) -> void`  
 	Register a fully managed grounded cross mod combat pet. AoMM will take over this projectile's 
-	AI every frame, and will cause it to behave like a basic grounded minion (eg. the Flinx staff).
+	AI every frame, and will cause it to behave like a basic grounded minion (eg. the Pirate staff).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
 	pet level.
 	* `versionString`: The version string for the AoMM version this call is targeting
@@ -197,7 +197,7 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("RegisterGroundedMinion", string versionString, ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a fully managed grounded cross mod minion. AoMM will take over this projectile's 
-	AI every frame, and will cause it to behave like a basic grounded minion (eg. the Flinx staff).
+	AI every frame, and will cause it to behave like a basic grounded minion (eg. the Pirate staff).
 	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
@@ -235,10 +235,19 @@ The parameter values, their types, and their effects on the minion's behavior ar
 most of these parameters can only be updated for minions, since the values are updated automatically for
 combat pets based on the player's pet level.
 
-* `bool IsActive`: Whether this minion or pet currently has cross-mod AI applied. By default, this is true for a
-  projectile if it was spawned from its associated cross-mod buff, or an item that adds that buff to the player.
-  For more complicated minion spawn conditions, such as a minion that is spawned as a sub-projectile of another 
-  minion, this flag must be set to true manually.
+* `bool IsActive`:
+  Whether this projectile should currently have cross-mod AI applied.
+  By default, this flag is managed by AoMM and is set to true under the following conditions:
+  - For pets, as long as the associated cross-mod buff is active.
+  - For minions, as long as the associated cross-mod buff is active, and the minion was
+  spawned from an item that provides that buff.
+  For simple use cases (most pets, and most minions that consist of a single projectile),
+  this flag should be left as its default value.
+  For more complicated use cases, such as a minion that is spawned as a sub-projectile of 
+  another minion, this flag must be set manually.
+  Once this flag has been set manually at least once for a projectile, AoMM will stop updating 
+  it automatically, and it will maintain its latest set value. 
+
 
 * `int? FiredProjectileId`: Which projectile the minion should fire. set manually for both minions and pets. If null,
   the minion/pet will perform a melee attack instead.
