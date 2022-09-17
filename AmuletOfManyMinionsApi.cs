@@ -270,10 +270,11 @@ namespace AoMMCrossModSample
         /// </summary>
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
+        /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack. Currently unused.</param>
         /// <param name="idleBounce">Whether the minion should remain stationary while idle, or always bounce</param>
-        internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, bool idleBounce)
+        internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, int? projType, bool idleBounce)
         {
-            AommMod?.Call("RegisterSlimePet", versionString, proj, buff, idleBounce);
+            AommMod?.Call("RegisterSlimePet", versionString, proj, buff, projType, idleBounce);
         }
 
         /// <summary>
