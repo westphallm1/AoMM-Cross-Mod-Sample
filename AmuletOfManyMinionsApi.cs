@@ -307,6 +307,17 @@ namespace AoMMCrossModSample
         {
             AommMod?.Call("RegisterGroundedMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
         }
+
+        /// <summary>
+        /// Get the combat pet level of a player directly. Most stats on managed combat pets
+        /// scale automatically with the player's combat pet level. 
+        /// </summary>
+        /// <param name="player">The player whose combat pet level should be retireved</param>
+        /// <returns>The combat pet level of that player, based on the strongest pet emblem in their inventory</returns>
+        internal static int GetPetLevel(Player player)
+        {
+            return ((int?) AommMod?.Call("GetPetLevel", versionString, player)) ?? 0;
+        }
         #endregion
     }
 

@@ -8,6 +8,7 @@ using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
 using AoMMCrossModSample.Pets.SampleGroundedPet;
 using AoMMCrossModSample.Pets.SampleMeleeRangedPet;
 using AoMMCrossModSample.Pets.SampleOptionalCombatPet;
+using AoMMCrossModSample.Pets.SampleSlimePet;
 using AoMMCrossModSample.Projectiles;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,6 +37,12 @@ namespace AoMMCrossModSample
                 GetInstance<SampleFlyingRangedPetProjectile>(), 
                 GetInstance<SampleFlyingRangedPetBuff>(), 
                 ProjectileType<FrostDaggerfishCloneProjectile>());
+
+            // Register a projectile with vanilla pet AI as a slime-style cross mod combat pet with a ranged attack
+            // The final boolean paramter determines whether the slime pet will bounce at all times, or only when
+            // moving
+            AmuletOfManyMinionsApi.RegisterSlimePet(
+                GetInstance<SampleSlimePetProjectile>(), GetInstance<SampleSlimePetBuff>(), ProjectileType<SapphireBoltCloneProjectile>(), true);
 
             // Apply combat pet AI to a projectile that is not a clone of a vanilla pet
             // This pet's AI also perform some small custom actions based on AoMM state

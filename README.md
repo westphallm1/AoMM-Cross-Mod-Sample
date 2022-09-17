@@ -30,6 +30,9 @@ a different portion of the cross mod API:
 * `Pets/SampleFlyingPet/`: Contains the boilerplate code for a pet that behaves like the vanilla Zephyr Fish pet. No cross-mod specific
   code exists in this directory. The cross-mod combat pet behavior is managed entirely by the `mod.Call("RegisterFlyingPet", ...)`.
 
+* `Pets/SampleSlimePet/`: Contains the boilerplate code for a pet that behaves like the vanilla Slime Prince pet. No cross-mod specific
+  code exists in this directory. The cross-mod combat pet behavior is managed entirely by the `mod.Call("RegisterSlimePet", ...)`.
+
 * `Pets/SampleCustomPet/`: Contains the code for a non-pet projectile that is turned into a combat pet via 
   `mod.Call("RegisterFlyingPet", ...)`. Also includes a basic example of using `mod.Call("GetState",...)` to act on
   AoMM state variables retrieved as a dictionary.
@@ -83,6 +86,24 @@ AoMM provides the following mod.Calls:
 	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The active instance of the projectile whose state should be retrieved
 	* `destination`: An object that implements IAoMMState. Its fields will be overridden with the projectile's AoMM managed state via reflection.
+
+* `mod.Call("GetPetLevel", string versionString, Player player) -> int`  
+  Get the combat pet level of a player directly. Pet level is determined by the single strongest Combat Pet Emblem
+  in the player's inventory. Most stats on managed combat pets scale automatically with the player's combat pet level. 
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `player`: The player whose pet level should be accessed.  
+
+  Pet Levels are as follows:
+
+  0. Base power, similar in power to the Finch Staff
+  1. Gold ore tier, similar in power to the Flinx Staff
+	2. Evil ore tier, similar in power to Hornet Staff
+	3. Dungeon tier, similar in power to the Imp Staff
+	4. Early-hardmode tier, similar in power to the Spider Staff
+	5. Hallowed bar tier, similar in power to the Optic Staff
+	6. Post-Plantera Dungeon tier, similar in power to the Xeno Staff
+	7. Lunar Pillar tier, similar in power to the Stardust Cell Staff
+	8. Post-Moonlord tier, slightly stronger than the strongest vanilla minions
 
 ### Modifying AoMM-Controlled Behavior Dynamically:
 

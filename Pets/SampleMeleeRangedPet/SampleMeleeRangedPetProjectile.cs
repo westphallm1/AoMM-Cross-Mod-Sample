@@ -40,11 +40,11 @@ namespace AoMMCrossModSample.Pets.SampleMeleeRangedPet
             }
 
             // If we're AoMM-managed, set the fired projectile based on AoMM pet level 
-            if(AmuletOfManyMinionsApi.TryGetStateDirect(this, out var modState) && 
-                AmuletOfManyMinionsApi.TryGetParamsDirect(this, out var modParams))
+            if(AmuletOfManyMinionsApi.TryGetParamsDirect(this, out var modParams))
             {
-                modParams.FiredProjectileId = modState.PetLevel > 2 ? ProjectileType<FrostDaggerfishCloneProjectile>() : null;
-                // need to explicitly write updates to the params back,
+                int petLevel = AmuletOfManyMinionsApi.GetPetLevel(Main.player[Projectile.owner]);
+                modParams.FiredProjectileId = petLevel > 2 ? ProjectileType<FrostDaggerfishCloneProjectile>() : null;
+                // need to explicitly write updates to the params back
                 // TODO: there might be some more advanced form of reflection that can be used to make this automatic
                 AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
             }
