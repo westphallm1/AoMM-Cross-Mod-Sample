@@ -33,6 +33,10 @@ a different portion of the cross mod API:
 * `Pets/SampleSlimePet/`: Contains the boilerplate code for a pet that behaves like the vanilla Slime Prince pet. No cross-mod specific
   code exists in this directory. The cross-mod combat pet behavior is managed entirely by the `mod.Call("RegisterSlimePet", ...)`.
 
+* `Pets/SampleMultiPet/`: Contains the boilerplate code for a pet item that spawns multiple pet projectiles. No cross-mod specific
+  code exists in this directory. The cross-mod combat pet behavior is managed by adding a `mod.Call("RegisterGroundedPet", ...)`
+  for each type of pet projectile that the pet item spawns.
+
 * `Pets/SampleCustomPet/`: Contains the code for a non-pet projectile that is turned into a combat pet via 
   `mod.Call("RegisterFlyingPet", ...)`. Also includes a basic example of using `mod.Call("GetState",...)` to act on
   AoMM state variables retrieved as a dictionary.

@@ -7,6 +7,7 @@ using AoMMCrossModSample.Pets.SampleCustomPet;
 using AoMMCrossModSample.Pets.SampleFlyingRangedPet;
 using AoMMCrossModSample.Pets.SampleGroundedPet;
 using AoMMCrossModSample.Pets.SampleMeleeRangedPet;
+using AoMMCrossModSample.Pets.SampleMultiPet;
 using AoMMCrossModSample.Pets.SampleOptionalCombatPet;
 using AoMMCrossModSample.Pets.SampleSlimePet;
 using AoMMCrossModSample.Projectiles;
@@ -60,6 +61,13 @@ namespace AoMMCrossModSample
             AmuletOfManyMinionsApi.RegisterGroundedPet(
                 GetInstance<SampleMeleeRangedPetProjectile>(), GetInstance<SampleMeleeRangedPetBuff>(), null);
 
+
+            // Register two different combat pet projectiles to the same cross-mod buff
+            // Spawning of both projectiles from the same buff must be handled from the buff itself
+            AmuletOfManyMinionsApi.RegisterGroundedPet(
+                GetInstance<SampleMultiPetGroundedProjectile>(), GetInstance<SampleMultiPetBuff>(), null);
+            AmuletOfManyMinionsApi.RegisterFlyingPet(
+                GetInstance<SampleMultiPetFlyingProjectile>(), GetInstance<SampleMultiPetBuff>(), null);
         }
 
         private static void RegisterMinions()
