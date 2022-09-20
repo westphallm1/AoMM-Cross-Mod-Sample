@@ -43,12 +43,12 @@ namespace AoMMCrossModSample
             // The final boolean paramter determines whether the slime pet will bounce at all times, or only when
             // moving
             AmuletOfManyMinionsApi.RegisterSlimePet(
-                GetInstance<SampleSlimePetProjectile>(), GetInstance<SampleSlimePetBuff>(), ProjectileType<SapphireBoltCloneProjectile>(), true);
+                GetInstance<SampleSlimePetProjectile>(), GetInstance<SampleSlimePetBuff>(), ProjectileType<SapphireBoltCloneProjectile>(), false);
 
             // Apply combat pet AI to a projectile that is not a clone of a vanilla pet
-            // This pet's AI also perform some small custom actions based on AoMM state
+            // This pet's AI also performs some small custom actions based on AoMM state
             AmuletOfManyMinionsApi.RegisterFlyingPet(
-                GetInstance<SampleCustomPetProjectile>(), GetInstance<SampleCustomPetBuff>(), null);
+                GetInstance<SampleCustomPetProjectile>(), GetInstance<SampleCustomPetBuff>(), null, false);
 
             // Apply combat pet AI to a projectile with multiple summoning buffs, so that it will be a
             // regular pet when summoned with one buff and a combat pet when summoned with the other

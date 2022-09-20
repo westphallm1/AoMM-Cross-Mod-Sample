@@ -184,7 +184,7 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 
-* `mod.Call("RegisterFlyingPet", string versionString, ModProjectile proj, ModBuff buff, int? projType) -> void`  
+* `mod.Call("RegisterFlyingPet", string versionString, ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle) -> void`  
 	Register a fully managed flying cross mod combat pet. AoMM will take over this projectile's 
 	AI every frame, and will cause it to behave like a basic flying minion (eg. the Raven staff).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
@@ -193,6 +193,7 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
+	* `defaultIdle`: Whether to maintain this pet's default behavior while not attacking an enemy. Default true
 
 * `mod.Call("RegisterFlyingMinion", string versionString, ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a fully managed flying cross mod minion. AoMM will take over this projectile's 
@@ -209,6 +210,7 @@ AoMM provides the following mod.Calls:
 		How quickly the minion should change directions. See behavior parameters below for more details.
 	* `attackFrames`: 
 		How frequently the minion should fire a projectile. See behavior parameters below for more details.
+	* `defaultIdle`: Whether to maintain this minion's default behavior while not attacking an enemy. Default true
 
 * `mod.Call("RegisterGroundedPet", string versionString, ModProjectile proj, ModBuff buff, int? projType) -> void`  
 	Register a fully managed grounded cross mod combat pet. AoMM will take over this projectile's 
@@ -219,6 +221,7 @@ AoMM provides the following mod.Calls:
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
+	* `defaultIdle`: Whether to maintain this pet's default behavior while not attacking an enemy. Default true
 
 * `mod.Call("RegisterGroundedMinion", string versionString, ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia) -> void`  
 	Register a fully managed grounded cross mod minion. AoMM will take over this projectile's 
@@ -235,6 +238,7 @@ AoMM provides the following mod.Calls:
 		How quickly the minion should change directions. See behavior parameters below for more details.
 	* `attackFrames`: 
 		How frequently the minion should fire a projectile. See behavior parameters below for more details.
+	* `defaultIdle`: Whether to maintain this minion's default behavior while not attacking an enemy. Default true
 
 * `mod.Call("RegisterSlimePet", string versionString, ModProjectile proj, ModBuff buff, bool idleBounce) -> void`  
 	Register a fully managed slime-style cross mod combat pet. AoMM will take over this projectile's 
@@ -244,7 +248,7 @@ AoMM provides the following mod.Calls:
 	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
-	* `idleBounce`: Whether the minion should remain stationary while not moving, or always bounce back and forth.
+	* `defaultIdle`: Whether to maintain this pet's default behavior while not attacking an enemy. Default true
 
 ## Amulet of Many Minions cross-mod Behavior Parameters Documentation
 

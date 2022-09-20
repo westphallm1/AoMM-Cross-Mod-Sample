@@ -212,9 +212,13 @@ namespace AoMMCrossModSample
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
         /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack</param>
-        internal static void RegisterFlyingPet(ModProjectile proj, ModBuff buff, int? projType)
+        /// <param name="defaultIdle">
+        /// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
+        /// while not attacking enemies.
+        /// </param>
+        internal static void RegisterFlyingPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
         {
-            AommMod?.Call("RegisterFlyingPet", versionString, proj, buff, projType);
+            AommMod?.Call("RegisterFlyingPet", versionString, proj, buff, projType, defaultIdle);
         }
 
         /// <summary>
@@ -242,10 +246,14 @@ namespace AoMMCrossModSample
         /// A good frequency depends on the amount of damage done, with somewhere around 45 frames
         /// for a high damage projectile and 15 frames for a low damage projectile.
         /// </param>
+        /// <param name="defaultIdle">
+        /// Whether to use default pet AI while idling by the player. Set to true to maintain unique minion behaviors 
+        /// while not attacking enemies.
+        /// </param>
         internal static void RegisterFlyingMinion(
-            ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
+            ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30, bool defaultIdle = true)
         {
-            AommMod?.Call("RegisterFlyingMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
+            AommMod?.Call("RegisterFlyingMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames, defaultIdle);
         }
 
         /// <summary>
@@ -257,9 +265,13 @@ namespace AoMMCrossModSample
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
         /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack</param>
-        internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, int? projType)
+        /// <param name="defaultIdle">
+        /// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
+        /// while not attacking enemies.
+        /// </param>
+        internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
         {
-            AommMod?.Call("RegisterGroundedPet", versionString, proj, buff, projType);
+            AommMod?.Call("RegisterGroundedPet", versionString, proj, buff, projType, defaultIdle);
         }
 
         /// <summary>
@@ -271,10 +283,13 @@ namespace AoMMCrossModSample
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
         /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack. Currently unused.</param>
-        /// <param name="idleBounce">Whether the minion should remain stationary while idle, or always bounce</param>
-        internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, int? projType, bool idleBounce)
+        /// <param name="defaultIdle">
+        /// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
+        /// while not attacking enemies.
+        /// </param>
+        internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
         {
-            AommMod?.Call("RegisterSlimePet", versionString, proj, buff, projType, idleBounce);
+            AommMod?.Call("RegisterSlimePet", versionString, proj, buff, projType, defaultIdle);
         }
 
         /// <summary>
@@ -302,10 +317,14 @@ namespace AoMMCrossModSample
         /// A good frequency depends on the amount of damage done, with somewhere around 45 frames
         /// for a high damage projectile and 15 frames for a low damage projectile.
         /// </param>
+        /// <param name="defaultIdle">
+        /// Whether to use default pet AI while idling by the player. Set to true to maintain unique minion behaviors 
+        /// while not attacking enemies.
+        /// </param>
         internal static void RegisterGroundedMinion(
-            ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30)
+            ModProjectile proj, ModBuff buff, int? projType, int searchRange, int travelSpeed, int inertia, int attackFrames = 30, bool defaultIdle = true)
         {
-            AommMod?.Call("RegisterGroundedMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames);
+            AommMod?.Call("RegisterGroundedMinion", versionString, proj, buff, projType, searchRange, travelSpeed, inertia, attackFrames, defaultIdle);
         }
 
         /// <summary>
