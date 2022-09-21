@@ -91,6 +91,30 @@ AoMM provides the following mod.Calls:
 	* `proj`: The active instance of the projectile whose state should be retrieved
 	* `destination`: An object that implements IAoMMState. Its fields will be overridden with the projectile's AoMM managed state via reflection.
 
+* `mod.Call("IsActive", string versionString, ModProjectile proj) -> bool`  
+  Convenience method for getting a projectile's cross-mod IsActive flag directly without reflection. See the cross-mod behavior paramters documentation
+  for more details.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+
+* `mod.Call("IsIdle", string versionString, ModProjectile proj) -> bool`  
+  Convenience method for getting a projectile's cross-mod IsIdle flag directly without reflection. See the cross-mod state documentation
+  for more details.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+
+* `mod.Call("IsAttacking", string versionString, ModProjectile proj) -> bool`  
+  Convenience method for getting a projectile's cross-mod IsAttacking flag directly without reflection. See the cross-mod state documentation
+  for more details.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+
+* `mod.Call("IsPathfinding", string versionString, ModProjectile proj) -> bool`  
+  Convenience method for getting a projectile's cross-mod IsPathfinding flag directly without reflection. See the cross-mod state documentation
+  for more details.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The active instance of the projectile whose state should be retrieved
+
 * `mod.Call("GetPetLevel", string versionString, Player player) -> int`  
   Get the combat pet level of a player directly. Pet level is determined by the single strongest Combat Pet Emblem
   in the player's inventory. Most stats on managed combat pets scale automatically with the player's combat pet level. 

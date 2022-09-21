@@ -78,6 +78,42 @@ namespace AoMMCrossModSample
         }
 
         /// <summary>
+        /// Quick, non-reflective getter for the cross-mod IsActive flag. See the CrossModParams interface for more details.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to access the state for</param>
+        internal static bool IsActive(ModProjectile proj)
+        {
+            return (bool)(AommMod?.Call("IsActive", versionString, proj) ?? false);
+        }
+
+        /// <summary>
+        /// Quick, non-reflective getter for the cross-mod IsIdle flag. See the CrossModState interface for more details.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to access the state for</param>
+        internal static bool IsIdle(ModProjectile proj)
+        {
+            return (bool)(AommMod?.Call("IsIdle", versionString, proj) ?? false);
+        }
+
+        /// <summary>
+        /// Quick, non-reflective getter for the cross-mod IsAttacking flag. See the CrossModState interface for more details.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to access the state for</param>
+        internal static bool IsAttacking(ModProjectile proj)
+        {
+            return (bool)(AommMod?.Call("IsAttacking", versionString, proj) ?? false);
+        }
+
+        /// <summary>
+        /// Quick, non-reflective getter for the cross-mod IsPathfinding flag. See the CrossModState interface for more details.
+        /// </summary>
+        /// <param name="proj">The ModProjectile to access the state for</param>
+        internal static bool IsPathfinding(ModProjectile proj)
+        {
+            return (bool)(AommMod?.Call("IsPathfinding", versionString, proj) ?? false);
+        }
+
+        /// <summary>
         /// Get the <key, object> mapping of the parameters used to control this projectile's
         /// cross-mod behavior. See IAoMMParams interface below for the names and types of these parameters.
         /// </summary>
