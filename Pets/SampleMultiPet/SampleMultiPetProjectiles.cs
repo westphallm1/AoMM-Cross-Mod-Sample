@@ -34,6 +34,13 @@ namespace AoMMCrossModSample.Pets.SampleMultiPet
 
         public override void AI()
         {
+            if(AmuletOfManyMinionsApi.IsActive(this))
+            {
+                // Since this pet spawns two projectiles, decrease damage dealt
+                // AoMM updates combat pet damage every frame, so update here every frame as well
+                Projectile.originalDamage = 3 * Projectile.originalDamage / 4;
+            }
+
             if (Main.player[Projectile.owner].HasBuff(BuffType<SampleMultiPetBuff>()))
             {
                 Projectile.timeLeft = 2;
@@ -75,6 +82,13 @@ namespace AoMMCrossModSample.Pets.SampleMultiPet
 
         public override void AI()
         {
+            if(AmuletOfManyMinionsApi.IsActive(this))
+            {
+                // Since this pet spawns two projectiles, decrease damage dealt
+                // AoMM updates combat pet damage every frame, so update here every frame as well
+                Projectile.originalDamage = 3 * Projectile.originalDamage / 4;
+            }
+
             if (Main.player[Projectile.owner].HasBuff(BuffType<SampleMultiPetBuff>()))
             {
                 Projectile.timeLeft = 2;

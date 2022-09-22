@@ -72,7 +72,10 @@ a different portion of the cross mod API:
   practical scenario for cross mod AI behavior, but demonstrates an advanced feature of the cross mod AI.
 
 * `Projectiles/`: Contains clones of a few vanilla projectiles, with their `SetDefaults` updated to properly set the flags for a
-	minion-shot projectile. These projectiles are assigned as minion attacks in several `mod.Calls` (see below).
+  minion-shot projectile. These projectiles are assigned as minion attacks in several `mod.Calls` (see below). Also, includes
+  an example of using `ModProjectile.OnSpawn(IEntitySource source)` to alter projectile behavior based on a cross-mod minion's
+  state in `FrostDaggerfishCloneProjectile.cs`. The projectile spawning code for cross-mod minions is fairly inflexible, so any 
+  adjustments must be made after the projectile is spawned.
 
 ## Mod.Call Documentation
 
@@ -268,10 +271,23 @@ AoMM provides the following mod.Calls:
 	Register a fully managed slime-style cross mod combat pet. AoMM will take over this projectile's 
 	AI every frame, and will cause it to behave like a slime pet (eg. the Slime Prince).
 	The pet's damage, movement speed, and search range will automatically scale with the player's combat
-	pet level. Note that slime pets currently only support a melee attack, and cannot fire a projectile.
+	pet level.
 	* `versionString`: The version string for the AoMM version this call is targeting
 	* `proj`: The singleton instance of the ModProjectile for this minion type
 	* `buff`: The singleton instance of the ModBuff associated with the minion
+	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack
+	* `defaultIdle`: Whether to maintain this pet's default behavior while not attacking an enemy. Default true
+
+* `mod.Call("RegisterWormPet", string versionString, ModProjectile proj, ModBuff buff, bool idleBounce) -> void`  
+	Register a fully managed worm-style cross mod combat pet. AoMM will take over this projectile's 
+	AI every frame, and will cause it to behave like a slime pet (eg. the Eater of Worms).
+	The pet's damage, movement speed, and search range will automatically scale with the player's combat
+	pet level. Note that worm pets currently work best with melee movement, and will behave oddly if a projectile
+	is specified.
+	* `versionString`: The version string for the AoMM version this call is targeting
+	* `proj`: The singleton instance of the ModProjectile for this minion type
+	* `buff`: The singleton instance of the ModBuff associated with the minion
+	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack.
 	* `defaultIdle`: Whether to maintain this pet's default behavior while not attacking an enemy. Default true
 
 ## Amulet of Many Minions cross-mod Behavior Parameters Documentation
@@ -285,8 +301,8 @@ These values can be retrieved and updated as a dictionary via `mod.Call("GetPara
 `mod.Call("UpdateParams", versionString, projectile, dict)`, or written to and read from an object directly via 
 `mod.Call("GetParamsDirect", versionString, projectile, destination)` and `mod.Call("UpdateParamsDirect", versionString, projectile, source)`.
 The parameter values, their types, and their effects on the minion's behavior are documented below. Note that
-most of these parameters can only be updated for minions, since the values are updated automatically for
-combat pets based on the player's pet level.
+for minions, most parameters are set directly, while for combat pets parameters are specified as a multiple
+of the default combat pet stat at a given combat pet level.
 
 * `bool IsActive`:
   Whether this projectile should currently have cross-mod AI applied.
@@ -304,6 +320,8 @@ combat pets based on the player's pet level.
 
 * `int? FiredProjectileId`: Which projectile the minion should fire. set manually for both minions and pets. If null,
   the minion/pet will perform a melee attack instead.
+
+### Minion-specific behavior parameters
 
 * `int SearchRange`: The range (in pixels) over which the tactic enemy selection should search. 
   Updated automatically for pets, set manually for minions. For minions, a
@@ -325,11 +343,24 @@ combat pets based on the player's pet level.
   * 12 for early hardmode
   * 8 for late hardmode  
 
-
 * `int AttackFrames`: The rate at which the minion should fire its projectile, if it fires a projectile. Updated 
   automatically for pets, set manually for minions. Reasonable values for this parameter vary depending on the
 	damage of the minion, but values between 15 (4 attacks per second) for a fast, low damage minion, and 60 
 	(1 attack per second) for a slow, high damage minion may be reasonable.
+
+### Combat Pet-specific behavior parameters
+
+* `float MaxSpeedScaleFactor`: Used to adjust the rate at which travel speed scales with combat pet level.
+  Higher values lead to faster movement speed. For best results, should be in the range of 0.75f to 1.25f. 
+  Default 1f. Only affects combat pet AI.
+
+* `float InertiaScaleFactor`: Used to adjust the rate at which turn speed scales with combat pet level.
+  Lower values lead to faster turn speed. For best results, should be in the range of 0.5f to 2f. 
+  Default 1f. Only affects combat pet AI.
+
+* `float InertiaScaleFactor`: Used to adjust the rate at which projectile fire rate scales with combat 
+  pet level. Lower values lead to higher rate of fire. For best results, should be in the range of 0.5f to 1.5f. 
+  Default 1f. Only affects combat pet AI.
 
 ## Amulet of Many Minions cross-mod State Documentation
 

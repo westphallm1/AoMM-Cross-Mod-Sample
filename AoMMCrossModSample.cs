@@ -9,6 +9,7 @@ using AoMMCrossModSample.Pets.SampleGroundedPet;
 using AoMMCrossModSample.Pets.SampleMeleeRangedPet;
 using AoMMCrossModSample.Pets.SampleMultiPet;
 using AoMMCrossModSample.Pets.SampleOptionalCombatPet;
+using AoMMCrossModSample.Pets.SampleRapidFirePet;
 using AoMMCrossModSample.Pets.SampleSlimePet;
 using AoMMCrossModSample.Projectiles;
 using Terraria.ID;
@@ -68,6 +69,11 @@ namespace AoMMCrossModSample
                 GetInstance<SampleMultiPetGroundedProjectile>(), GetInstance<SampleMultiPetBuff>(), null);
             AmuletOfManyMinionsApi.RegisterFlyingPet(
                 GetInstance<SampleMultiPetFlyingProjectile>(), GetInstance<SampleMultiPetBuff>(), null);
+
+            // Register a combat pet that uses SetParameters to adjust the default scaling of attack speed
+            // with pet level
+            AmuletOfManyMinionsApi.RegisterFlyingPet(
+                GetInstance<SampleRapidFirePetProjectile>(), GetInstance<SampleRapidFirePetBuff>(), ProjectileType<FrostDaggerfishCloneProjectile>());
         }
 
         private static void RegisterMinions()

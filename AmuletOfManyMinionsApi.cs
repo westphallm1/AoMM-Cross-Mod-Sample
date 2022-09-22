@@ -314,11 +314,11 @@ namespace AoMMCrossModSample
 	    /// Register a fully managed slime-style cross mod combat pet. AoMM will take over this projectile's 
 	    /// AI every frame, and will cause it to behave like a slime pet (eg. the Slime Prince).
 	    /// The pet's damage, movement speed, and search range will automatically scale with the player's combat
-	    /// pet level. Note that slime pets currently only support a melee attack, and cannot fire a projectile.
+	    /// pet level. 
         /// </summary>
         /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
         /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
-        /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack. Currently unused.</param>
+        /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack.</param>
         /// <param name="defaultIdle">
         /// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
         /// while not attacking enemies.
@@ -326,6 +326,25 @@ namespace AoMMCrossModSample
         internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
         {
             AommMod?.Call("RegisterSlimePet", versionString, proj, buff, projType, defaultIdle);
+        }
+
+        /// <summary>
+	    /// Register a fully managed worm-style cross mod combat pet. AoMM will take over this projectile's 
+	    /// AI every frame, and will cause it to behave like a worm pet (eg. the Eater of Worms).
+	    /// The pet's damage, movement speed, and search range will automatically scale with the player's combat
+	    /// pet level. Note that the worm AI is intended for melee attacks, and will not move smoothly if
+        /// set to fire a projectile.
+        /// </summary>
+        /// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
+        /// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
+        /// <param name="projType">Which projectile the minion should shoot. If null, the minion will do a melee attack.</param>
+        /// <param name="defaultIdle">
+        /// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
+        /// while not attacking enemies.
+        /// </param>
+        internal static void RegisterWormPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
+        {
+            AommMod?.Call("RegisterWormPet", versionString, proj, buff, projType, defaultIdle);
         }
 
         /// <summary>
@@ -513,6 +532,28 @@ namespace AoMMCrossModSample
         /// it automatically, and it will maintain its latest set value. 
         /// </summary>
         bool IsActive { get; set; }
+
+        /// <summary>
+        /// How quickly this combat pet should turn, compared to the default combat pet AI.
+        /// Lower values lead to faster turning. For best results, should be in the range of
+        /// 0.5f to 1.5f. Default 1f. Has no effect on regular minion AI.
+        /// </summary>
+        float InertiaScaleFactor { get; set; }
+
+        /// <summary>
+        /// How quickly this combat pet should move, compared to the default combat pet AI.
+        /// Higher values lead to faster movement speed. For best results, should be in the 
+        /// range of 0.75f to 1.25f. Default 1f. Has no effect on regular minion AI.
+        /// </summary>
+        float MaxSpeedScaleFactor { get; set; }
+
+        /// <summary>
+        /// How quickly this combat pet should fire projectiles, compared to the default 
+        /// combat pet AI. Lower values lead to a higher rate of fire. For best results, 
+        /// should be in the range of 0.5f to 1.5f. Default 1f. Has no effect on regular 
+        /// minion AI.
+        /// </summary>
+        float AttackFramesScaleFactor { get; set; }
     }
 
     /// <summary>
@@ -563,6 +604,11 @@ namespace AoMMCrossModSample
         public int SearchRange { get; set; }
         public int AttackFrames { get; set; }
         public int? FiredProjectileId { get; set; }
+        public float InertiaScaleFactor { get; set; }
+
+        public float MaxSpeedScaleFactor { get; set; }
+
+        public float AttackFramesScaleFactor { get; set; }
     }
     #endregion
 }
