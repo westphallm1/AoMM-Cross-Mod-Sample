@@ -289,6 +289,7 @@ AoMM provides the following mod.Calls:
 	* `buff`: The singleton instance of the ModBuff associated with the minion
 	* `projType`: Which projectile the minion should shoot. If null, the minion will do a melee attack.
 	* `defaultIdle`: Whether to maintain this pet's default behavior while not attacking an enemy. Default true
+	* `wormLength`: The approximate length of the worm. Mostly cosmetic, used to determine radius of idling animation.
 
 ## Amulet of Many Minions cross-mod Behavior Parameters Documentation
 
