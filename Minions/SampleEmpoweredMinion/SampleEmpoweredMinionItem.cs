@@ -12,7 +12,7 @@ namespace AoMMCrossModSample.Minions.SampleEmpoweredMinion
 	// Code largely adapted from tModLoader Sample Mod
 	internal class SampleEmpoweredMinionItem : ModItem
 	{
-		public override string Texture => "Terraria/Images/Item_" + ItemID.DeadlySphereStaff;
+		public override string Texture => "Terraria/Images/Item_" + ItemID.RavenStaff;
 
 		public override void SetStaticDefaults()
 		{
@@ -21,7 +21,7 @@ namespace AoMMCrossModSample.Minions.SampleEmpoweredMinion
 		}
 		public override void SetDefaults()
 		{
-			Item.CloneDefaults(ItemID.DeadlySphereStaff);
+			Item.CloneDefaults(ItemID.RavenStaff);
 			Item.damage = 45; // lower base damage since it gains more power per summon
 							  // summon the counter minion rather than the empowered minion
 			Item.shoot = ProjectileType<SampleEmpoweredMinionCounterProjectile>();

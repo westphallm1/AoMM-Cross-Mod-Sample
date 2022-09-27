@@ -42,7 +42,7 @@ namespace AoMMCrossModSample.Pets.SampleSlimePet
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			// make it red to distinguish from vanilla
+			// add a tint to distinguish from vanilla
 			lightColor = Color.Violet.MultiplyRGB(lightColor * 1.5f);
 			return true;
 		}

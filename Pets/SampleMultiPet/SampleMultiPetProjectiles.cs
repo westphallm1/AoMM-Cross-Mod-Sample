@@ -49,7 +49,7 @@ namespace AoMMCrossModSample.Pets.SampleMultiPet
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			// make it red to distinguish from vanilla
+			// add a tint to distinguish from vanilla
 			lightColor = Color.LimeGreen.MultiplyRGB(lightColor * 1.5f);
 			return true;
 		}
@@ -97,7 +97,7 @@ namespace AoMMCrossModSample.Pets.SampleMultiPet
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			// make it red to distinguish from vanilla
+			// add a tint to distinguish from vanilla
 			lightColor = Color.LimeGreen.MultiplyRGB(lightColor * 1.5f);
 			return true;
 		}

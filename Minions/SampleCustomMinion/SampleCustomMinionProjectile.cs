@@ -110,7 +110,7 @@ namespace AoMMCrossModSample.Minions.SampleCustomMinion
 			for (int i = 0; i < Main.maxNPCs; i++)
 			{
 				NPC possibleTarget = Main.npc[i];
-				if (possibleTarget.CanBeChasedBy() && // only taret enemies that can attack the player
+				if (possibleTarget.CanBeChasedBy() && // only target enemies that can attack the player
 				   Vector2.DistanceSquared(possibleTarget.Center, Projectile.Center) < 700 * 700 && // only attack enemies that are close by
 				   Collision.CanHitLine(possibleTarget.Center, 1, 1, Projectile.Center, 1, 1))
 				{

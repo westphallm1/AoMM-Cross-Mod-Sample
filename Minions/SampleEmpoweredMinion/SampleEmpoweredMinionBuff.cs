@@ -11,7 +11,7 @@ namespace AoMMCrossModSample.Minions.SampleEmpoweredMinion
 	// Code largely adapted from tModLoader Sample Mod
 	internal class SampleEmpoweredMinionBuff : ModBuff
 	{
-		public override string Texture => "Terraria/Images/Buff_" + BuffID.DeadlySphere;
+		public override string Texture => "Terraria/Images/Buff_" + BuffID.Ravens;
 
 		public override void SetStaticDefaults()
 		{

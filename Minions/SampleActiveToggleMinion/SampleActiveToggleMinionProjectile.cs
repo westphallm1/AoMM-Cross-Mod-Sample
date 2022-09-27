@@ -66,7 +66,7 @@ namespace AoMMCrossModSample.Minions.SampleActiveToggleMinion
 
 		public override bool OnTileCollide(Vector2 oldVelocity)
 		{
-			return false; // do not die when colling with a tile
+			return false; // do not die when colliding with a tile
 		}
 
 	}

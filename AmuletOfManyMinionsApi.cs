@@ -22,7 +22,7 @@ namespace AoMMCrossModSample
 
 		//This is the version of the calls that are used for the mod.
 		//If AoMM updates, it will keep working on the outdated calls, but new features might not be available
-		internal static readonly Version apiVersion = new Version(0, 16, 0, 4);
+		internal static readonly Version apiVersion = new Version(0, 16, 1);
 
 		internal static string versionString;
 
@@ -139,24 +139,24 @@ namespace AoMMCrossModSample
 		}
 
 		/// <summary>
-		/// Update the parameters used to control this projectile's cross mod behaviior by passing
+		/// Update the parameters used to control this projectile's cross mod behavior by passing
 		/// in a <key, object> mapping of new parameter values. See IAoMMParams interface below for the names and 
 		/// types of these parameters.
 		/// </summary>
 		/// <param name="proj">The ModProjectile to update the behavior parameters for.</param>
-		/// <param name="update">A dictionary containing new behavior paramter values.</param>
+		/// <param name="update">A dictionary containing new behavior parameter values.</param>
 		internal static void UpdateParams(ModProjectile proj, Dictionary<string, object> update)
 		{
 			AommMod?.Call("UpdateParams", versionString, proj, update);
 		}
 
 		/// <summary>
-		/// Update the parameters used to control this projectile's cross mod behaviior by passing
-		/// in an object that implements the correct paramter names and types. See IAoMMParams interface below for 
+		/// Update the parameters used to control this projectile's cross mod behavior by passing
+		/// in an object that implements the correct parameter names and types. See IAoMMParams interface below for 
 		/// the names and types of these parameters.
 		/// </summary>
 		/// <param name="proj">The ModProjectile to update the behavior parameters for.</param>
-		/// <param name="update">An object containing new behavior paramter values.</param>
+		/// <param name="update">An object containing new behavior parameter values.</param>
 		internal static void UpdateParamsDirect(ModProjectile proj, IAoMMParams update)
 		{
 			AommMod?.Call("UpdateParamsDirect", versionString, proj, update);
@@ -389,7 +389,7 @@ namespace AoMMCrossModSample
 		/// Get the combat pet level of a player directly. Most stats on managed combat pets
 		/// scale automatically with the player's combat pet level. 
 		/// </summary>
-		/// <param name="player">The player whose combat pet level should be retireved</param>
+		/// <param name="player">The player whose combat pet level should be retrieved</param>
 		/// <returns>The combat pet level of that player, based on the strongest pet emblem in their inventory</returns>
 		internal static int GetPetLevel(Player player)
 		{

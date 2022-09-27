@@ -10,7 +10,9 @@ namespace AoMMCrossModSample.Projectiles
 	/// <summary>
 	/// Clone of the vanilla frost daggerfish, with appropriate metadata set to count as
 	/// launched by a minion. Not used by any default AI, only added to AI via cross mod 
-	/// intergration.
+	/// integration. Used by two cross-mod minion AIs, with differing behavior based on
+	/// which cross-mod minion it was spawned from. Spawn source is determined in `OnSpawn`,
+	/// since cross-mod AI does not set any other custom flags on launched projectiles.
 	/// </summary>
 	internal class FrostDaggerfishCloneProjectile : ModProjectile
 	{
@@ -33,7 +35,7 @@ namespace AoMMCrossModSample.Projectiles
 		public override void OnSpawn(IEntitySource source)
 		{
 			// AoMM cross-mod AI will set the projectile spawn source to the cross-mod minion that originated
-			// the projectile, but otherwise uses a set of default paramters, including 0 in both ai slots.
+			// the projectile, but otherwise uses a set of default parameters, including 0 in both ai slots.
 			// To apply special behavior to the spawned projectile based on the cross-mod minion that spawned it,
 			// check the source in OnSpawn
 			FromRapidFirePet = source is EntitySource_Parent parentSource &&

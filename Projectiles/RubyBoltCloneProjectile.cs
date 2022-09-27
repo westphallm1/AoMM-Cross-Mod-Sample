@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 namespace AoMMCrossModSample.Projectiles
 {
 	/// <summary>
-	/// Clone of the vanilla frost daggerfish, with appropriate metadata set to count as
+	/// Clone of the vanilla ruby bolt, with appropriate metadata set to count as
 	/// launched by a minion. Not used by any default AI, only added to AI via cross mod 
-	/// intergration.
+	/// integration.
 	/// </summary>
 	internal class RubyBoltCloneProjectile : ModProjectile
 	{

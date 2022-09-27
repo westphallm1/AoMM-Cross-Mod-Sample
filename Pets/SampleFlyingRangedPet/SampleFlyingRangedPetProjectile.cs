@@ -39,7 +39,7 @@ namespace AoMMCrossModSample.Pets.SampleFlyingRangedPet
 
 		public override bool PreDraw(ref Color lightColor)
 		{
-			// make it red to distinguish from vanilla
+			// add a tint to distinguish from vanilla
 			lightColor = Color.LightSkyBlue.MultiplyRGB(lightColor * 1.5f);
 			return true;
 		}
