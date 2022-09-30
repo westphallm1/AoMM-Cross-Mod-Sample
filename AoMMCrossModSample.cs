@@ -11,6 +11,7 @@ using AoMMCrossModSample.Pets.SampleMultiPet;
 using AoMMCrossModSample.Pets.SampleOptionalCombatPet;
 using AoMMCrossModSample.Pets.SampleRapidFirePet;
 using AoMMCrossModSample.Pets.SampleSlimePet;
+using AoMMCrossModSample.Pets.SampleTurretPet;
 using AoMMCrossModSample.Projectiles;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -71,6 +72,12 @@ namespace AoMMCrossModSample
 			// with pet level
 			AmuletOfManyMinionsApi.RegisterFlyingPet(
 				GetInstance<SampleRapidFirePetProjectile>(), GetInstance<SampleRapidFirePetBuff>(), ProjectileType<FrostDaggerfishCloneProjectile>());
+
+			// Register a flying combat pet that uses mod.Calls to implement a number of custom movement
+			// and projectile firing behaviors. `projType = 0` is used to specify that the projectile
+			// firing behavior should be managed in-mod, rather than by AoMM
+			AmuletOfManyMinionsApi.RegisterFlyingPet(
+				GetInstance<SampleTurretPetProjectile>(), GetInstance<SampleTurretPetBuff>(), 0, false);
 		}
 
 		private static void RegisterMinions()

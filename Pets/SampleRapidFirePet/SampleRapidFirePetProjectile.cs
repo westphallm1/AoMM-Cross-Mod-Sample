@@ -58,7 +58,7 @@ namespace AoMMCrossModSample.Pets.SampleRapidFirePet
 
 			if (AmuletOfManyMinionsApi.IsActive(this))
 			{
-				// Since we attack more rapidly than the combat pet, also decrease damage dealt
+				// Since we attack more rapidly than the basic combat pet, also decrease damage dealt
 				// AoMM updates combat pet damage every frame, so update here every frame as well
 				Projectile.originalDamage = 3 * Projectile.originalDamage / 4;
 			}

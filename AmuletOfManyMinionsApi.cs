@@ -165,6 +165,9 @@ namespace AoMMCrossModSample
 		/// <summary>
 		/// For the following frame, do not apply AoMM's pre-calculated position and velocity changes 
 		/// to the projectile in PostAI(). Used to temporarily override behavior in fully managed minion AIs
+		///
+		/// Note: This call resets the projectile's position and velocity to their values at the beginning of
+		/// PreAI, so it should be called before any changes to velocity occur in AI().
 		/// </summary>
 		/// <param name="proj">The ModProjectile to release for this frame</param>
 		internal static void ReleaseControl(ModProjectile proj)
@@ -388,6 +391,16 @@ namespace AoMMCrossModSample
 		/// <summary>
 		/// Get the combat pet level of a player directly. Most stats on managed combat pets
 		/// scale automatically with the player's combat pet level. 
+		/// Pet Levels are as follows: 
+		/// 0. Base power, similar in power to the Finch Staff 
+		/// 1. Gold ore tier, similar in power to the Flinx Staff 
+		/// 2. Evil ore tier, similar in power to Hornet Staff 
+		/// 3. Dungeon tier, similar in power to the Imp Staff 
+		/// 4. Early-hardmode tier, similar in power to the Spider Staff 
+		/// 5. Hallowed bar tier, similar in power to the Optic Staff 
+		/// 6. Post-Plantera Dungeon tier, similar in power to the Xeno Staff 
+		/// 7. Lunar Pillar tier, similar in power to the Stardust Cell Staff 
+		/// 8. Post-Moonlord tier, slightly stronger than the strongest vanilla minions
 		/// </summary>
 		/// <param name="player">The player whose combat pet level should be retrieved</param>
 		/// <returns>The combat pet level of that player, based on the strongest pet emblem in their inventory</returns>
@@ -413,7 +426,8 @@ namespace AoMMCrossModSample
 		int Inertia { get; set; }
 
 		/// <summary>
-		/// Whether AoMM expects the minion to be attacking an enemy on the current frame.
+		/// Whether AoMM expects the minion to be attacking an enemy on the current frame. If this
+		/// is true, TargetNPC will be non null.
 		/// </summary>
 		bool IsAttacking { get; set; }
 
@@ -472,8 +486,28 @@ namespace AoMMCrossModSample
 
 		/// <summary>
 		/// The NPC selected as most relevant based on the minion's current tactic and search range.
+		/// This value is set as soon as a hostile NPC enters the minion's line of sight within
+		/// its search range, and unset when that NPC dies, or line of sight is broken for several
+		/// consecutive frames.
 		/// </summary>
 		NPC TargetNPC { get; set; }
+
+		/// <summary>
+		/// For managed cross-mod AIs that fire a projectile, true whenever an enemy is present,
+		/// and within a close enough range to fire a projectile at. Always false for non-managed
+		/// cross-mod AIs, and for managed melee cross-mod AIs. Can be used to implement custom
+		/// behavior on top of a managed cross-mod minion's attacking AI.
+		/// </summary>
+		bool IsInFiringRange { get; set; }
+
+		/// <summary>
+		/// For managed cross-mod AIs that fire a projectile, true whenever the cross-mod AI has fired
+		/// a projectile on the current frame. Always false for non-managed cross-mod AIs, and for managed 
+		/// melee cross-mod AIs. Can be used to implement custom behavior on top of a managed cross-mod 
+		/// minion's attacking AI. 
+		/// Note: Only set to true on the client that owns the projectile.
+		/// </summary>
+		bool ShouldFireThisFrame { get; set; }
 	}
 
 	/// <summary>
@@ -496,6 +530,8 @@ namespace AoMMCrossModSample
 		public bool IsAttacking { get; set; }
 		public bool IsIdle { get; set; }
 		public bool IsActive { get; set; }
+		public bool IsInFiringRange { get; set; }
+		public bool ShouldFireThisFrame { get; set; }
 	}
 
 

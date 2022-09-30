@@ -63,6 +63,11 @@ a different portion of the cross mod API:
   for travel speed and attack rate. The cross-mod AI then scales its own behavior parameters, determined by the player's combat
   pet level, by these scale factors.
 
+* `Pets/SampleTurretPet/`: Contains code demonstrating an advanced use case for a pet projectile that implements custom behavior 
+  by overriding certain behaviors of the managed flying cross-mod AI. Uses `mod.Call("RegisterFlyingPet", ...)` to initially register 
+  the projectile as a managed flying pet, then a combination of `mod.Call("ReleaseControl",...)` and `mod.Call("GetStateDirect",...)` to
+  implement custom movement and projectile launching behavior on top of the default flying cross-mod AI.
+
 ### Cross-mod Minion examples
 
 * `Minions/SampleGroundedMinion/`: Contains the boilerplate code for a minion that behaves like the vanilla vampire frog pet. No cross-mod 
@@ -184,7 +189,9 @@ AoMM provides the following mod.Calls:
 
 * `mod.Call("ReleaseControl", string versionString, ModProjectile proj) -> void`  
   For the following frame, do not apply AoMM's pre-calculated position and velocity changes 
-  to the projectile in PostAI(). Used to temporarily override behavior in fully managed minion AIs.
+  to the projectile in PostAI(). Used to temporarily override behavior in fully managed minion AIs.  
+  **Note:** This call resets the projectile's position and velocity to their values at the beginning of
+  PreAI, so it should be called before any changes to velocity occur in AI().  
   * `versionString`: The version string for the AoMM version this call is targeting
   * `proj`: The active instance of the projectile whose state should be retrieved
 
@@ -413,4 +420,15 @@ is present, and the minion has either not completed the pathfinding route, or ha
 * `List<NPC> PossibleTargetNPCs`: All possible NPC targets, ordered by proximity to the most relevant target.
 
 * `NPC TargetNPC`: The NPC selected as most relevant based on the minion's current tactic and search range.
-`null` if none are available.
+  `null` if none are available. This is set to a value as soon as a hostile NPC enters the projectile's line of sight,
+  then unset if that NPC dies, or line of sight is broken for several frames in a row.
+
+* `bool IsInFiringRange`: For managed cross-mod AIs that fire a projectile, true when both an enemy is present
+  (IsAttacking), line of sight to that enemy is not currently broken, and the projectile is sufficiently close
+  to the enemy to fire a projectile. Always false for non projectile firing cross-mod AIs. Used to provide
+  more visibility into the cross-mod projectile firing behavior for advanced use cases.
+
+* `bool ShouldFireThisFrame`: For managed cross-mod AIs that fire a projectile, true on the frame that AoMM 
+  determines a projectile should be fired. Always false for non projectile firing cross-mod AIs. Used to provide
+  more visibility into the cross-mod projectile firing behavior for advanced use cases.
+
