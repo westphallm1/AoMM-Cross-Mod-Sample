@@ -80,9 +80,7 @@ namespace AoMMCrossModSample.Pets.SampleTurretPet
 			Projectile.originalDamage = 2 * Projectile.originalDamage / 3;
 
 			// only perform other cross-mod tasks while AoMM is attacking, and in range to fire a projectile
-			if(!AmuletOfManyMinionsApi.IsAttacking(this) || 
-				!AmuletOfManyMinionsApi.TryGetStateDirect(this, out var modState) || 
-				!modState.IsInFiringRange)
+			if(!AmuletOfManyMinionsApi.TryGetStateDirect(this, out var modState) || !modState.IsInFiringRange)
 			{
 				return;
 			}
@@ -91,11 +89,14 @@ namespace AoMMCrossModSample.Pets.SampleTurretPet
 			// then also 12 and 24 frames after that
 			// In the registration mod.Call, set firedProjectileId = 0 to prevent AoMM from spawning
 			// a projectile with the default parameters
-			if(modState.ShouldFireThisFrame) { framesSinceLastFiredProjectile = 0; }
+			if(modState.ShouldFireThisFrame) 
+			{ 
+				framesSinceLastFiredProjectile = 0; 
+			}
 
 			bool shouldFireThisFrame = framesSinceLastFiredProjectile % 12 == 0 && framesSinceLastFiredProjectile < 36;
 			// ensure that this code only runs client side, and that an npc exists to attack
-			if(shouldFireThisFrame && Main.myPlayer == Projectile.owner  && modState.TargetNPC is NPC targetNpc)
+			if(shouldFireThisFrame && Main.myPlayer == Projectile.owner && modState.TargetNPC is NPC targetNpc)
 			{
 				Vector2 launchVector = targetNpc.Center - Projectile.Center;
 				launchVector.Normalize();
