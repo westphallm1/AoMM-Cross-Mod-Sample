@@ -45,7 +45,6 @@ namespace AoMMCrossModSample.Pets.SampleMeleeRangedPet
 				int petLevel = AmuletOfManyMinionsApi.GetPetLevel(Main.player[Projectile.owner]);
 				modParams.FiredProjectileId = petLevel > 2 ? ProjectileType<FrostDaggerfishCloneProjectile>() : null;
 				// need to explicitly write updates to the params back
-				// TODO: there might be some more advanced form of reflection that can be used to make this automatic
 				AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
 			}
 		}

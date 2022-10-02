@@ -78,7 +78,7 @@ namespace AoMMCrossModSample
 		}
 
 		/// <summary>
-		/// Quick, non-reflective getter for the cross-mod IsActive flag. See the CrossModParams interface for more details.
+		/// Quick, non-reflective getter for the cross-mod IsActive flag. See the IAoMMCombatPetParams interface for more details.
 		/// </summary>
 		/// <param name="proj">The ModProjectile to access the state for</param>
 		internal static bool IsActive(ModProjectile proj)
@@ -416,6 +416,8 @@ namespace AoMMCrossModSample
 	/// Interface containing the names and types of the variables in the AoMM state.
 	/// An object that implements this interface can be populated directly with a projectile's
 	/// current AoMM state using mod.Call("GetStateDirect", versionString, projectile, stateImpl).  
+	/// Values in the AoMM state are all read-only. For AoMM variables that can be both read and
+	/// updated, see IAoMMParams
 	/// </summary>
 	public interface IAoMMState
 	{
@@ -543,8 +545,8 @@ namespace AoMMCrossModSample
 	/// An object that implements this interface can be populated directly with a projectile's
 	/// current AoMM parameters using mod.Call("GetParamsDirect", versionString, projectile, paramsImpl).  
 	/// 
-	/// The AI parameters of an active projectile can be updated to match an object that implements
-	/// this interface using mod.Call("UpdateParamsDirect", versionString, projectile, paramsImpl).  
+	/// The AI parameters of an active projectile are all read/write, and can be updated to match an 
+	/// object that implements this interface using mod.Call("UpdateParamsDirect", versionString, projectile, paramsImpl).  
 	/// 
 	/// An additional interface is provided below for parameters that are only relevant to minions,
 	/// as they are updated automatically for combat pets based on the player's pet level.
@@ -593,6 +595,21 @@ namespace AoMMCrossModSample
 		/// minion AI.
 		/// </summary>
 		float AttackFramesScaleFactor { get; set; }
+
+		/// <summary>
+		/// How fast the projectiles launched by this combat pet should travel, compared
+		/// to the default combat pet AI. Higher values lead to a higher launch velocity. 
+		/// For best results, should be in the range of 0.5f to 2f. Default 1f. Has no effect 
+		/// on regular minion AI.
+		/// </summary>
+		float LaunchVelocityScaleFactor { get; set; }
+
+		/// <summary>
+		/// If this minion fires a projectile, it will attempt to position itself `PreferredTargetDistance`
+		/// pixels away from the NPC that it is attacking. Has no effect on melee minions.
+		/// </summary>
+		int PreferredTargetDistance { get; set; }
+
 	}
 
 	/// <summary>
@@ -613,26 +630,35 @@ namespace AoMMCrossModSample
 	{
 		/// <summary>
 		/// How quickly the minion should change directions while moving. Higher values lead to
-		/// slower turning. 
+		/// slower turning. Only applies to minions, updated automatically every frame for combat
+		/// pets.
 		/// </summary>
 		int Inertia { get; set; }
 
 		/// <summary>
-		/// Max travel speed for the minion.
+		/// Max travel speed for the minion. Only applies to minions, updated automatically every 
+		/// frame for combat pets.
 		/// </summary>
 		int MaxSpeed { get; set; }
 
 		/// <summary>
-		/// The range (in pixels) over which the tactic enemy selection should search.
+		/// The range (in pixels) over which the tactic enemy selection should search. Only applies 
+		/// to minions, updated automatically every frame for combat pets.
 		/// </summary>
 		int SearchRange { get; set; }
 
 		/// <summary>
 		/// The projectile firing rate for the minion, if that minion fires a projectile. Only
 		/// applies to projectile-firing minions. The attack speed of melee minions is derived
-		/// from their movement speed.
+		/// from their movement speed. Updated automatically every frame for combat pets.
 		/// </summary>
 		int AttackFrames { get; set; }
+
+		/// <summary>
+		/// How fast the projectiles launched by this combat pet should travel, compared
+		/// to the default combat pet AI. 
+		/// </summary>
+		float LaunchVelocity { get; set; }
 	}
 
 	public class AoMMParamsImpl : IAoMMParams
@@ -644,10 +670,11 @@ namespace AoMMCrossModSample
 		public int AttackFrames { get; set; }
 		public int? FiredProjectileId { get; set; }
 		public float InertiaScaleFactor { get; set; }
-
 		public float MaxSpeedScaleFactor { get; set; }
-
 		public float AttackFramesScaleFactor { get; set; }
+		public float LaunchVelocity { get; set; }
+		public float LaunchVelocityScaleFactor { get; set; }
+		public int PreferredTargetDistance { get; set; }
 	}
 	#endregion
 }

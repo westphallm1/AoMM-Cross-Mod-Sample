@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AoMMCrossModSample.Projectiles;
+using Microsoft.Xna.Framework;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -127,8 +128,11 @@ namespace AoMMCrossModSample.Minions.SampleEmpoweredMinion
 				// them at some reasonable minimum in case too many counter minions are summoned
 				modParams.AttackFrames = Math.Max(30, 60 - 5 * empowerCount);
 				modParams.MaxSpeed = Math.Min(16, 12 + empowerCount);
+				modParams.LaunchVelocity = Math.Min(18, 14 + empowerCount);
 				modParams.Inertia = Math.Min(16, 12 + empowerCount);
 				modParams.SearchRange = Math.Min(1200, 1000 + 50 * empowerCount);
+				modParams.FiredProjectileId = empowerCount > 3 ?
+					ProjectileType<SapphireBoltCloneProjectile>() : ProjectileType<RubyBoltCloneProjectile>();
 				// Need to manually apply params updates after updating
 				AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
 			}

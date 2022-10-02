@@ -45,6 +45,10 @@ namespace AoMMCrossModSample.Pets.SampleRapidFirePet
 				modParams.MaxSpeedScaleFactor = 1.1f;
 				// increase rate of fire (decrease frames between firing projectiles)
 				modParams.AttackFramesScaleFactor = 0.6f;
+				// increase velocity of fired projectiles
+				modParams.LaunchVelocityScaleFactor = 1.25f;
+				// decrease preferred distance from targets
+				modParams.PreferredTargetDistance = 64;
 				AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
 			}
 		}

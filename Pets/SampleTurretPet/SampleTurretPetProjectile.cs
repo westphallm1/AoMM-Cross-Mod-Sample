@@ -80,28 +80,30 @@ namespace AoMMCrossModSample.Pets.SampleTurretPet
 			Projectile.originalDamage = 2 * Projectile.originalDamage / 3;
 
 			// only perform other cross-mod tasks while AoMM is attacking, and in range to fire a projectile
-			if(!AmuletOfManyMinionsApi.TryGetStateDirect(this, out var modState) || !modState.IsInFiringRange)
+			if(!AmuletOfManyMinionsApi.TryGetStateDirect(this, out var modState) || !modState.IsInFiringRange || 
+				!AmuletOfManyMinionsApi.TryGetParamsDirect(this, out var modParams))
 			{
 				return;
 			}
 
 			// Perform fully custom projectile firing AI: Attack on the frame that AoMM suggests to attack,
-			// then also 12 and 24 frames after that
+			// then also 1/6th and 2/6th of the way between AoMM's suggested attack cycle length
 			// In the registration mod.Call, set firedProjectileId = 0 to prevent AoMM from spawning
 			// a projectile with the default parameters
+			int fireRate = modParams.AttackFrames / 6;
 			if(modState.ShouldFireThisFrame) 
 			{ 
 				framesSinceLastFiredProjectile = 0; 
 			}
 
-			bool shouldFireThisFrame = framesSinceLastFiredProjectile % 12 == 0 && framesSinceLastFiredProjectile < 36;
+			bool shouldFireThisFrame = framesSinceLastFiredProjectile % fireRate == 0 && framesSinceLastFiredProjectile < 3 * fireRate;
 			// ensure that this code only runs client side, and that an npc exists to attack
-			if(shouldFireThisFrame && Main.myPlayer == Projectile.owner && modState.TargetNPC is NPC targetNpc)
+			if(shouldFireThisFrame && Main.myPlayer == Projectile.owner)
 			{
-				Vector2 launchVector = targetNpc.Center - Projectile.Center;
+				Vector2 launchVector = modState.TargetNPC.Center - Projectile.Center;
 				launchVector.Normalize();
 				// fire faster the higher the player's pet level
-				launchVector *= 1.5f * modState.MaxSpeed;
+				launchVector *= modParams.LaunchVelocity;
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromThis(),
 					Projectile.Center,
