@@ -18,11 +18,11 @@ a different portion of the cross mod API:
 
 ### General cross-mod utilities
 
-* `AmuletOfManyMinionsApi.cs`: Contains all the things you need in your mod - convenience wrappers for every `mod.Call` option in AoMM, helper classes and interfaces, as well as documentation for those. Documentation is also provided below in the README.
+* `AmuletOfManyMinionsApi.cs`: Contains all the things you need in your mod - convenience wrappers for every `mod.Call` option in AoMM, helper classes and interfaces, as well as documentation for those.
     * IAoMMState: An Interface that matches the value names and types returned by AoMM's state-getter call 
-  (`mod.Call("GetStateDirect", versionString, projectile, output)`), as well as documentation of those fields, and a basic implementation of that interface (AoMMStateImpl). Documentation for the fields in the interface is also provided below in the README.
+  (`mod.Call("GetStateDirect", versionString, projectile, output)`), as well as documentation of those fields, and a basic implementation of that interface (AoMMStateImpl).
     * IAoMMParams: An Interface that matches the value names and types returned by AoMM's params-getter call 
-  (`mod.Call("GetParamsDirect", versionString, projectile, destination)`), as well as documentation of those fields, and a basic implementation of that interface (AoMMParamsImpl). Documentation for the fields in the interface is also provided below in the README.
+  (`mod.Call("GetParamsDirect", versionString, projectile, destination)`), as well as documentation of those fields, and a basic implementation of that interface (AoMMParamsImpl).
 
 * `AoMMCrossModSample.cs`: Contains all of the `mod.Call`s used to register the sample minions and pets for cross-mod AI.
 

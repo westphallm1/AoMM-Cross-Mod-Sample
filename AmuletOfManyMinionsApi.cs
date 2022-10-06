@@ -417,7 +417,8 @@ namespace AoMMCrossModSample
 	/// An object that implements this interface can be populated directly with a projectile's
 	/// current AoMM state using mod.Call("GetStateDirect", versionString, projectile, stateImpl).  
 	/// Values in the AoMM state are all read-only. For AoMM variables that can be both read and
-	/// updated, see IAoMMParams
+	/// updated, see IAoMMParams. State is only calculated while the cross-mod AI is active. When
+	/// accessing the cross-mod state while cross-mod AI is not active, all values will be `default`.
 	/// </summary>
 	public interface IAoMMState
 	{
@@ -464,11 +465,6 @@ namespace AoMMCrossModSample
 		/// The position of the end of the pathfinding path.
 		/// </summary>
 		Vector2? PathfindingDestination { get; set; }
-
-		/// <summary>
-		/// The suggested originalDamage value for a combat pet based on the player's current combat pet level.
-		/// </summary>
-		int PetDamage { get; set; }
 
 		/// <summary>
 		/// The current combat pet level of the player the projectile belongs to.
