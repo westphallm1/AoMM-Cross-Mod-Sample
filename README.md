@@ -2,9 +2,11 @@
 
 ## Overview
 This repository contains a small example mod that utilizes [Amulet of Many Minions' (AoMM)](https://github.com/westphallm1/tModLoader_Minions) cross-mod
-API. This API allows minions and pets added by other mods to utilize AoMM's pathfinding tools,
-select enemies to attack based on AoMM's target selection tactics, and, in the case of pets, automatically
-scale in damage and travel speed based on the player's combat pet level.
+API. This API allows pets added by other mods to utilize AoMM's pathfinding tools,
+select enemies to attack based on AoMM's target selection tactics, and automatically
+scale in damage and travel speed based on the player's combat pet level. Currently, 
+only the conversion of regular pets into combat pets is supported by the API. Support
+for regular minions is planned for the near future.
 
 ## Requirements
 * Make sure your build.txt has `loadAfter = AmuletOfManyMinions` added to it to ensure proper mod load order, as some calls depend on that order.
@@ -67,29 +69,6 @@ a different portion of the cross mod API:
   by overriding certain behaviors of the managed flying cross-mod AI. Uses `mod.Call("RegisterFlyingPet", ...)` to initially register 
   the projectile as a managed flying pet, then a combination of `mod.Call("ReleaseControl",...)` and `mod.Call("GetStateDirect",...)` to
   implement custom movement and projectile launching behavior on top of the default flying cross-mod AI.
-
-### Cross-mod Minion examples
-
-* `Minions/SampleGroundedMinion/`: Contains the boilerplate code for a minion that behaves like the vanilla vampire frog pet. No cross-mod 
-  specific code exists in this directory. The cross-mod minion behavior is managed entirely by `mod.Call("RegisterGroundedMinion", ...)`.
-
-* `Minions/SamplePathfindingMinion/`: Contains the code for a minion that implements custom behavior based on AoMM's state variables,
-  while using AoMM's default pathfinder-following code. Also includes an example of using `mod.Call("GetStateDirect", ...)` to access
-  AoMM's state variables directly as an object.
-
-* `Minions/SampleCustomMinion/`: Contains the code for a minion that implements custom behavior based on AoMM's state variables,
-  while implementing custom code for following the pathfinder. Also includes an example of using `mod.Call("GetStateDirect", ...)` 
-  to access AoMM's state variables directly as an object.
-
-* `Minions/SampleEmpoweredMinion/`: Contains the code for a minion that behaves like Abigail or the Desert tiger, summoning a single minion
-  that gets more powerful with each minion slot used. Uses `mod.Call("GetParamsDirect", ...)` and `mod.Call("UpdateParamsDirect", ...)` to 
-  dynamically update the minion's travel speed, search range, and attack rate based on the number of copies summoned. Also contains an
-  example of manually enabling cross-mod AI with the `IsActive` flag in `UpdateParamsDirect`, since the specific spawn conditions for 
-  the empowered minion prevent AoMM from enabling it by default.
-
-* `Minions/SampleActiveToggleMinion/`: Contains the code for a minion that behaves like the vanilla vampire pet frog, and switches
-  between its default AI and the managed grounded cross mod AI based on the count of minions summoned. This is not a particularly
-  practical scenario for cross mod AI behavior, but demonstrates an advanced feature of the cross mod AI.
 
 ### Miscellaneous examples
 
