@@ -401,7 +401,6 @@ namespace AoMMCrossModSample
 		public List<NPC> PossibleTargetNPCs { get; set; }
 		public bool IsPet { get; set; }
 		public int PetLevel { get; set; }
-		public int PetDamage { get; set; }
 		public bool IsPathfinding { get; set; }
 		public bool IsAttacking { get; set; }
 		public bool IsIdle { get; set; }
