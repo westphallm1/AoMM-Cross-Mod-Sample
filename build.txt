@@ -1,5 +1,5 @@
 displayName = AoMM Cross Mod Sample
 author = Billybobmcbo
-version = 0.1
+version = 0.2
 homepage = https://forums.terraria.org/index.php?threads/the-amulet-of-many-minions.97188/
 loadAfter = AmuletOfManyMinions
