@@ -17,8 +17,6 @@ namespace AoMMCrossModSample.Pets.SampleSlimePet
 		{
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			DisplayName.SetDefault("Sample Slime Pet");
-			Description.SetDefault("Sample Slime Pet");
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)

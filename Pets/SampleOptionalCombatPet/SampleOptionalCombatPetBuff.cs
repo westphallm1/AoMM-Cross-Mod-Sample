@@ -20,8 +20,6 @@ namespace AoMMCrossModSample.Pets.SampleOptionalCombatPet
 		{
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			DisplayName.SetDefault("Sample Grounded Pet");
-			Description.SetDefault("Sample Grounded Pet");
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)
@@ -51,7 +49,6 @@ namespace AoMMCrossModSample.Pets.SampleOptionalCombatPet
 		public override void SetStaticDefaults()
 		{
 			base.SetStaticDefaults();
-			DisplayName.SetDefault(DisplayName.GetDefault() + " (AoMM Version)");
 		}
 	}
 

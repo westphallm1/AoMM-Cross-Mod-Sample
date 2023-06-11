@@ -1,0 +1,123 @@
+Mods: {
+	AoMMCrossModSample: {
+		Buffs: {
+			SampleCustomPetBuff: {
+				DisplayName: Sample Flying Pet
+				Description: Sample Flying Pet
+			}
+
+			SampleFlyingRangedPetBuff: {
+				DisplayName: Sample Flying Ranged Pet
+				Description: Sample Flying Ranged Pet
+			}
+
+			SampleGroundedPetBuff: {
+				DisplayName: Sample Grounded Pet
+				Description: Sample Grounded Pet
+			}
+
+			SampleMeleeRangedPetBuff: {
+				DisplayName: Sample MeleeRanged Pet
+				Description: Sample MeleeRanged Pet
+			}
+
+			SampleMultiPetBuff: {
+				DisplayName: Sample Multi Pet
+				Description: Sample Multi Pet
+			}
+
+			SampleOptionalCombatPetBuff: {
+				DisplayName: Sample Grounded Pet
+				Description: Sample Grounded Pet
+			}
+
+			SampleOptionalCombatPetBuff_CombatVersion: {
+				DisplayName: Sample Grounded Pet (AoMM Version)
+				Description: Sample Grounded Pet
+			}
+
+			SampleRapidFirePetBuff: {
+				DisplayName: Sample RapidFire Ranged Pet
+				Description: Sample RapidFire Ranged Pet
+			}
+
+			SampleSlimePetBuff: {
+				DisplayName: Sample Slime Pet
+				Description: Sample Slime Pet
+			}
+
+			SampleTurretPetBuff: {
+				DisplayName: Sample Turret Pet
+				Description: Sample Turret Pet
+			}
+		}
+
+		Items: {
+			SampleCustomPetItem: {
+				DisplayName: Sample Custom Pet Item
+				Tooltip: ""
+			}
+
+			SampleFlyingRangedPetItem: {
+				DisplayName: Sample Flying Ranged Pet Item
+				Tooltip: ""
+			}
+
+			SampleGroundedPetItem: {
+				DisplayName: Sample Grounded Pet Item
+				Tooltip: ""
+			}
+
+			SampleMeleeRangedPetItem: {
+				DisplayName: Sample Melee Ranged Pet Item
+				Tooltip: ""
+			}
+
+			SampleMultiPetItem: {
+				DisplayName: Sample Multi Pet Item
+				Tooltip: ""
+			}
+
+			SampleOptionalCombatPetItem: {
+				DisplayName: Sample Optional Combat Pet Item
+				Tooltip: ""
+			}
+
+			SampleOptionalCombatPetItem_CombatVersion: {
+				DisplayName: Sample Optional Combat Pet Item (AoMM Version)
+				Tooltip: ""
+			}
+
+			SampleRapidFirePetItem: {
+				DisplayName: Sample Rapid Fire Pet Item
+				Tooltip: ""
+			}
+
+			SampleSlimePetItem: {
+				DisplayName: Sample Slime Pet Item
+				Tooltip: ""
+			}
+
+			SampleTurretPetItem: {
+				DisplayName: Sample Turret Pet Item
+				Tooltip: ""
+			}
+		}
+
+		Projectiles: {
+			SampleCustomPetProjectile.DisplayName: Sample Custom Pet
+			SampleFlyingRangedPetProjectile.DisplayName: Sample Flying Ranged Pet
+			SampleGroundedPetProjectile.DisplayName: Sample Grounded Pet
+			SampleMeleeRangedPetProjectile.DisplayName: Sample Melee Ranged Pet
+			SampleMultiPetFlyingProjectile.DisplayName: Sample Multi Pet Flying
+			SampleMultiPetGroundedProjectile.DisplayName: Sample Multi Pet Grounded
+			SampleOptionalCombatPetProjectile.DisplayName: Sample Optional Combat Pet
+			SampleRapidFirePetProjectile.DisplayName: Sample Rapid Fire Pet
+			SampleSlimePetProjectile.DisplayName: Sample Slime Pet
+			SampleTurretPetProjectile.DisplayName: Sample Turret Pet
+			FrostDaggerfishCloneProjectile.DisplayName: Frost Daggerfish Clone
+			RubyBoltCloneProjectile.DisplayName: Ruby Bolt Clone
+			SapphireBoltCloneProjectile.DisplayName: Sapphire Bolt Clone
+		}
+	}
+}

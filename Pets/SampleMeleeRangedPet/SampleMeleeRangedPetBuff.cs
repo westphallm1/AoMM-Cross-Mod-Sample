@@ -17,8 +17,6 @@ namespace AoMMCrossModSample.Pets.SampleMeleeRangedPet
 		{
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			DisplayName.SetDefault("Sample MeleeRanged Pet");
-			Description.SetDefault("Sample MeleeRanged Pet");
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)
