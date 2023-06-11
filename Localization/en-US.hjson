@@ -32,8 +32,8 @@ Mods: {
 			}
 
 			SampleOptionalCombatPetBuff_CombatVersion: {
-				DisplayName: Sample Grounded Pet (AoMM Version)
-				Description: Sample Grounded Pet
+				DisplayName: "{$Buffs.SampleOptionalCombatPetBuff.DisplayName} (AoMM Version)"
+				Description: "{$Buffs.SampleOptionalCombatPetBuff.Description}"
 			}
 
 			SampleRapidFirePetBuff: {
@@ -84,7 +84,7 @@ Mods: {
 			}
 
 			SampleOptionalCombatPetItem_CombatVersion: {
-				DisplayName: Sample Optional Combat Pet Item (AoMM Version)
+				DisplayName: "{$Items.SampleOptionalCombatPetItem.DisplayName} (AoMM Version)"
 				Tooltip: ""
 			}
 
