@@ -18,7 +18,7 @@ namespace AoMMCrossModSample.Pets.SampleOptionalCombatPet
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Sample Optional Combat Pet Item");
+
 		}
 
 		public override void SetDefaults()
@@ -53,7 +53,6 @@ namespace AoMMCrossModSample.Pets.SampleOptionalCombatPet
 		public override void SetStaticDefaults()
 		{
 			base.SetStaticDefaults();
-			DisplayName.SetDefault(DisplayName.GetDefault() + " (AoMM Version)");
 		}
 
 		public override void SetDefaults()

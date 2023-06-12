@@ -17,8 +17,6 @@ namespace AoMMCrossModSample.Pets.SampleRapidFirePet
 		{
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
-			DisplayName.SetDefault("Sample RapidFire Ranged Pet");
-			Description.SetDefault("Sample RapidFire Ranged Pet");
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, int buffIndex, ref BuffDrawParams drawParams)
