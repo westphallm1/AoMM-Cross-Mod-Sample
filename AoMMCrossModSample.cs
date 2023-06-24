@@ -51,8 +51,11 @@ namespace AoMMCrossModSample
 			// Apply combat pet AI to a projectile that variably acts as a melee or ranged pet,
 			// depending on the player's combat pet level. Uses GetStateDirect to determine pet level,
 			// then GetParamsDirect and UpdateParamsDirect to dynamically update the fired projectile.
+			// The optional final parameter is used to indicate the pet level at which the pet's behavior changes
+			// on item tooltips.
 			AmuletOfManyMinionsApi.RegisterGroundedPet(
-				GetInstance<SampleMeleeRangedPetProjectile>(), GetInstance<SampleMeleeRangedPetBuff>(), null);
+				GetInstance<SampleMeleeRangedPetProjectile>(), GetInstance<SampleMeleeRangedPetBuff>(), null, 
+				levelUpTier: SampleMeleeRangedPetProjectile.BehaviorChangePetLevel);
 
 
 			// Register two different combat pet projectiles to the same cross-mod buff

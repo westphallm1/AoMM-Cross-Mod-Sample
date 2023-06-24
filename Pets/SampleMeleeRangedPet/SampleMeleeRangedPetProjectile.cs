@@ -10,6 +10,7 @@ namespace AoMMCrossModSample.Pets.SampleMeleeRangedPet
 	// Code largely adapted from tModLoader Sample Mod
 	internal class SampleMeleeRangedPetProjectile : ModProjectile
 	{
+		public static readonly int BehaviorChangePetLevel = 3;
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.PetLizard;
 		public override void SetStaticDefaults()
 		{
@@ -43,7 +44,7 @@ namespace AoMMCrossModSample.Pets.SampleMeleeRangedPet
 			if (AmuletOfManyMinionsApi.TryGetParamsDirect(this, out var modParams))
 			{
 				int petLevel = AmuletOfManyMinionsApi.GetPetLevel(Main.player[Projectile.owner]);
-				modParams.FiredProjectileId = petLevel > 2 ? ProjectileType<FrostDaggerfishCloneProjectile>() : null;
+				modParams.FiredProjectileId = petLevel >= BehaviorChangePetLevel ? ProjectileType<FrostDaggerfishCloneProjectile>() : null;
 				// need to explicitly write updates to the params back
 				AmuletOfManyMinionsApi.UpdateParamsDirect(this, modParams);
 			}

@@ -22,7 +22,7 @@ namespace AoMMCrossModSample
 
 		//This is the version of the calls that are used for the mod.
 		//If AoMM updates, it will keep working on the outdated calls, but new features might not be available
-		internal static readonly Version apiVersion = new Version(0, 16, 1);
+		internal static readonly Version apiVersion = new Version(0, 16, 2);
 
 		internal static string versionString;
 
@@ -184,10 +184,13 @@ namespace AoMMCrossModSample
 		/// </summary>
 		/// <param name="proj">The singleton instance of the ModProjectile for this minion type</param>
 		/// <param name="buff">The singleton instance of the ModBuff associated with the minion</param>
+		/// <param name="levelUpTier">
+		/// If provided, update mod item tooltips to indicate the combat pet level (<see cref="GetPetLevel(Player)"/>)
+		/// at which this pet's behavior changes.
 		/// </param>
-		internal static void RegisterPathfindingPet(ModProjectile proj, ModBuff buff)
+		internal static void RegisterPathfindingPet(ModProjectile proj, ModBuff buff, int levelUpTier = 0)
 		{
-			AommMod?.Call("RegisterPathfindingPet", versionString, proj, buff);
+			AommMod?.Call("RegisterPathfindingPet", versionString, proj, buff, levelUpTier);
 		}
 
 		/// <summary>
@@ -203,9 +206,13 @@ namespace AoMMCrossModSample
 		/// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
 		/// while not attacking enemies.
 		/// </param>
-		internal static void RegisterFlyingPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
+		/// <param name="levelUpTier">
+		/// If provided, update mod item tooltips to indicate the combat pet level (<see cref="GetPetLevel(Player)"/>)
+		/// at which this pet's behavior changes.
+		/// </param>
+		internal static void RegisterFlyingPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true, int levelUpTier = 0)
 		{
-			AommMod?.Call("RegisterFlyingPet", versionString, proj, buff, projType, defaultIdle);
+			AommMod?.Call("RegisterFlyingPet", versionString, proj, buff, projType, defaultIdle, levelUpTier);
 		}
 
 		/// <summary>
@@ -221,9 +228,13 @@ namespace AoMMCrossModSample
 		/// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
 		/// while not attacking enemies.
 		/// </param>
-		internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
+		/// <param name="levelUpTier">
+		/// If provided, update mod item tooltips to indicate the combat pet level (<see cref="GetPetLevel(Player)"/>)
+		/// at which this pet's behavior changes.
+		/// </param>
+		internal static void RegisterGroundedPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true, int levelUpTier = 0)
 		{
-			AommMod?.Call("RegisterGroundedPet", versionString, proj, buff, projType, defaultIdle);
+			AommMod?.Call("RegisterGroundedPet", versionString, proj, buff, projType, defaultIdle, levelUpTier);
 		}
 
 		/// <summary>
@@ -239,9 +250,13 @@ namespace AoMMCrossModSample
 		/// Whether to use default pet AI while idling by the player. Set to true to maintain unique pet behaviors 
 		/// while not attacking enemies.
 		/// </param>
-		internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true)
+		/// <param name="levelUpTier">
+		/// If provided, update mod item tooltips to indicate the combat pet level (<see cref="GetPetLevel(Player)"/>)
+		/// at which this pet's behavior changes.
+		/// </param>
+		internal static void RegisterSlimePet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true, int levelUpTier = 0)
 		{
-			AommMod?.Call("RegisterSlimePet", versionString, proj, buff, projType, defaultIdle);
+			AommMod?.Call("RegisterSlimePet", versionString, proj, buff, projType, defaultIdle, levelUpTier);
 		}
 
 		/// <summary>
@@ -261,9 +276,13 @@ namespace AoMMCrossModSample
 		/// <param name="wormLength">
 		/// The approximate length of the worm. Mostly cosmetic, used to determine radius of idling animation.
 		/// </param>
-		internal static void RegisterWormPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true, int wormLength = 64)
+		/// <param name="levelUpTier">
+		/// If provided, update mod item tooltips to indicate the combat pet level (<see cref="GetPetLevel(Player)"/>)
+		/// at which this pet's behavior changes.
+		/// </param>
+		internal static void RegisterWormPet(ModProjectile proj, ModBuff buff, int? projType, bool defaultIdle = true, int wormLength = 64, int levelUpTier = 0)
 		{
-			AommMod?.Call("RegisterWormPet", versionString, proj, buff, projType, defaultIdle, wormLength);
+			AommMod?.Call("RegisterWormPet", versionString, proj, buff, projType, defaultIdle, wormLength, levelUpTier);
 		}
 
 		/// <summary>
